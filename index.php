@@ -7,8 +7,12 @@ use KirbyExtended\BlurryPlaceholder;
 
 Kirby::plugin('kirby-extended/blurry-placeholder', [
     'options' => [
-        'enable' => true,
-        'pixel-target' => 60
+        'pixel-target' => 60,
+        'srcset' => [
+            'enable' => false,
+            'preset' => null,
+            'sizes' => 'auto'
+        ]
     ],
     'fileMethods' => [
         'placeholder' => fn() => BlurryPlaceholder::image($this),

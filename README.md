@@ -1,24 +1,16 @@
-<p align="center">
-  <img src="./.github/social-preview.png" alt="Social preview" width="640" height="320">
-</p>
+![Preview of Kirby blurry placeholder plugin](./.github/social-preview.png)
 
 # Kirby Blurry Placeholder
 
 > Blurry image placeholders with lazyloading for Kirby.
 
-## Key Features
+**Key Features:**
 
 - 🖼 Available as Kirbytag
 - 🗃 Extends as `Kirby\Cms\File` methods
 - ⚡️ Performant, vanilla JavaScript lazy loader included
 - 🔍 SEO-friendly with included lazy loader
 - ☀️ Wraps the blurred image in a SVG to avoid rasterizing the filter
-
-## Placeholders in Action
-
-> Note: Slowed down so that you can see better how placeholders look.
-
-![GIF showing plugin in action](./.github/kirby-blurry-placeholder-preview.gif)
 
 ## Requirements
 
@@ -91,7 +83,7 @@ Each parsed Kirbytag adds the `data-lazyload` attribute to the `img` element.
 
 Thus you can add the `[data-lazyload]` selector to you lazy loader.
 
-> Note: A `.lazyload` class is intentionally not added to avoid naming conflicts. I also prefer data attributes for JavaScript selection over classes. 🤷‍♂️
+> Note: A `.lazyload` class is intentionally not added to avoid naming conflicts. I also prefer data attributes over classes for selectors only used by JavaScript manipulation. 🤷‍♂️
 
 ## Options
 
@@ -99,9 +91,15 @@ Thus you can add the `[data-lazyload]` selector to you lazy loader.
 | --- | --- | --- |
 | `kirby-extended.blurry-placeholder.pixel-target` | 60 | Aim for a placeholder image of ~P pixels (w * h = ~P).
 
+## Placeholders in Action
+
+> Note: Slowed down so that you can see better how placeholders look.
+
+![GIF showing plugin in action](./.github/kirby-blurry-placeholder-preview.gif)
+
 ## TODO
 
-[ ] Add tests
+- [ ] Add tests
 
 ## Credits
 

@@ -40,7 +40,7 @@ composer require johannschopplich/kirby-blurry-placeholder
 
 ## Usage
 
-## … As `(blurryimage: …)` Kirbytag
+### … As `(blurryimage: …)` Kirbytag
 
 This plugin doesn't extend the core `(image: …)` Kirbytag, but builds upon it. So all of the options present are available in the plugin's Kirbytag as well.
 
@@ -67,7 +67,7 @@ If you have enabled `srcset`'s in the options, the Kirbytag syntax stays the sam
 <img src="<?= $image->placeholderUri() ?>" data-src="<?= $image->url() ?>" data-lazyload alt="<?= $image->alt() ?>">
 ```
 
-## Frontend
+## Lazy Loading in the Frontend
 
 You have two options to lazily load the larger image.
 

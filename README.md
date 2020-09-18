@@ -2,15 +2,14 @@
 
 # Kirby Blurry Placeholder
 
-> Blurry image placeholders with lazyloading for Kirby.
+This plugin provides ways to inline an URI-encoded SVG into the `src` attribute. The blurred image is wrapped in a SVG to avoid rasterizing the filter.
 
-**Key Features:**
+## Key Features
 
 - 🖼 Available as Kirbytag
 - 🗃 Extends as `Kirby\Cms\File` methods
-- ⚡️ Performant, vanilla JavaScript lazy loader included
+- ⚡️ Performant, vanilla JavaScript **lazy loader included**
 - 🔍 SEO-friendly with included lazy loader
-- ☀️ Wraps the blurred image in a SVG to avoid rasterizing the filter
 
 ## Requirements
 

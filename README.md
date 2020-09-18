@@ -18,7 +18,7 @@ This plugin implements progressive image loading, proving a better user experien
 ## Requirements
 
 - Kirby 3
-- PHP 7.4+
+- PHP 7.3+
 
 ## Installation
 

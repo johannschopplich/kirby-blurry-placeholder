@@ -15,8 +15,12 @@ Kirby::plugin('kirby-extended/blurry-placeholder', [
         ]
     ],
     'fileMethods' => [
-        'placeholder' => fn() => BlurryPlaceholder::image($this),
-        'placeholderUri' => fn() => BlurryPlaceholder::uri($this)
+        'placeholder' => function () {
+            return BlurryPlaceholder::image($this);
+        },
+        'placeholderUri' => function () {
+            return BlurryPlaceholder::uri($this);
+        }
     ],
     'tags' => [
         'blurryimage' => require __DIR__ . '/tags/blurryimage.php'

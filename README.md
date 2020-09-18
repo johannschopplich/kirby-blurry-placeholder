@@ -7,7 +7,7 @@ This plugin provides ways to inline an URI-encoded SVG into the `src` attribute.
 ## Key Features
 
 - 🖼 Available as Kirbytag
-- 🗃 Extends as `Kirby\Cms\File` methods
+- 🗃 Extends `Kirby\Cms\File` methods
 - ⚡️ Performant, vanilla JavaScript **lazy loader included**
 - 🔍 SEO-friendly with included lazy loader
 

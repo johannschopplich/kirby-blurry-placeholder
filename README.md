@@ -49,12 +49,14 @@ The `(blurryimage: …)` tag:
 - Sets the original image's URL as `data-src` or a set of responsive images as `data-srcset`.
 - Adds a `data-lazyload` attribute for selection by the lazy loading library.
 
-Example use in a KirbyText field:
+Example use within a KirbyText field:
 ```
 (blurryimage: myimage.jpg)
 (blurryimage: myimage.jpg link: https://example.com)
 (blurryimage: myimage.jpg class: is-poster)
 ```
+
+If you have enabled `srcset`'s in the options, the Kirbytag syntax stays the same. Just the output changes.
 
 ### … As File Method
 

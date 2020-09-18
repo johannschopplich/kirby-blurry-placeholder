@@ -14,8 +14,6 @@ return [
         'link',
         'linkclass',
         'rel',
-        'srcset',
-        'sizes',
         'target',
         'title',
         'width'
@@ -60,10 +58,10 @@ return [
             $dataUri = $tag->file->placeholderUri();
             $useSrcset = $tag->kirby()->option('kirby-extended.blurry-placeholder.srcset.enable');
             $preset = $tag->kirby()->option('kirby-extended.blurry-placeholder.srcset.preset');
-            $sizes = $tag->sizes ?? $tag->kirby()->option('kirby-extended.blurry-placeholder.srcset.sizes');
+            $sizes = $tag->kirby()->option('kirby-extended.blurry-placeholder.srcset.sizes');
 
             $image = Html::img($dataUri, A::merge($imageAttr, [
-                'data-src' => $useSrcset ? null : $tag->src,
+                'data-src' => !$useSrcset ? $tag->src : null,
                 'data-srcset' => $useSrcset ? $tag->file->srcset($preset) : null,
                 'data-sizes' => $useSrcset ? $sizes : null,
                 'data-lazyload' => 'true',

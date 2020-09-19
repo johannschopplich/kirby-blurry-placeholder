@@ -4,7 +4,8 @@
 
 This plugin implements progressive image loading, proving a better user experience. Tiny thumbnails which inherit the aspect ratio of their source image are combined with a blurry effect for a better placeholder than a solid colour, without sacrificing payload.
 
-1. An inline, URI-encoded SVG will fill the `src` attribute of a given image element when the HTML is requested. The blurred image is wrapped in a SVG to avoid rasterizing the filter.
+How it works:
+1. An inline, URI-encoded SVG fills the `src` attribute of a given image element. The blurred image is wrapped in a SVG to avoid rasterizing the filter.
 2. The large images are then only requests when they are within the viewport.
 
 ## Key Features
@@ -50,6 +51,7 @@ The `(blurryimage: …)` tag:
 - Adds a `data-lazyload` attribute for selection by the lazy loading library.
 
 Example use within a KirbyText field:
+
 ```
 (blurryimage: myimage.jpg)
 (blurryimage: myimage.jpg link: https://example.com)
@@ -105,7 +107,7 @@ Thus you can add the `[data-lazyload]` selector to you lazy loader.
 | `srcset.preset` | `null` | A preset passed to Kirby's `srcset` method when using the Kirbytag.
 | `srcset.sizes` | `auto` | String for the `data-sizes` attribute when using the Kirbytag.
 
-For example in your `config.php`:
+All of the `srcset` option have to be wrapped in an array. To give an example for your `config.php`:
 
 ```php
 <?php
@@ -113,6 +115,7 @@ For example in your `config.php`:
 return [
     // …
     'kirby-extended.blurry-placeholder' => [
+        'pixel-target' => 75,
         'srcset' => [
             'enable' => true,
             'preset' => 'text'

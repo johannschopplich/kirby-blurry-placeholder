@@ -92,9 +92,9 @@ useLazyload supports setting the `sizes` attribute automatically, corresponding 
 
 Each parsed Kirbytag adds the `data-lazyload` attribute to the `img` element.
 
-Thus you can add the `[data-lazyload]` selector to you lazy loader.
+Thus you can let your lazy loader of choice select these elements by passing `[data-lazyload]` as selector.
 
-> Note: A `.lazyload` class is intentionally not added to avoid naming conflicts. I also prefer data attributes over classes for selectors only used by JavaScript manipulation. 🤷‍♂️
+> Note: A `.lazyload` class is intentionally not added to avoid potential naming conflicts. I also prefer data attributes over classes for selectors only used by JavaScript manipulation. 🤷‍♂️
 
 ## Options
 
@@ -107,7 +107,9 @@ Thus you can add the `[data-lazyload]` selector to you lazy loader.
 | `srcset.preset` | `null` | A preset passed to Kirby's `srcset` method when using the Kirbytag.
 | `srcset.sizes` | `auto` | String for the `data-sizes` attribute when using the Kirbytag.
 
-All of the `srcset` option have to be wrapped in an array. To give an example for your `config.php`:
+> All of the `srcset` option have to be wrapped in an array.
+
+To give an example for your `config.php`:
 
 ```php
 <?php

@@ -1,4 +1,4 @@
-const isCrawler = /(gle|ing)bot/.test(navigator.userAgent)
+const isCrawler = !('onscroll' in window) || /(gle|ing|ro)bot|crawl|spider/i.test(navigator.userAgent)
 
 const load = element => {
   const newSrc = element.dataset.src

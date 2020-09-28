@@ -8,7 +8,7 @@ How it works:
 1. An inline, URI-encoded SVG fills the `src` attribute of a given image element. The blurred image is wrapped in a SVG to avoid rasterizing the filter.
 2. The large images are then only requests when they are within the viewport.
 
-## Key Features
+## Key features
 
 - ✨ Avoids content jumping (keeping aspect ratio)
 - 🖼 Available as Kirbytag
@@ -60,7 +60,7 @@ Example use within a KirbyText field:
 
 If you have enabled `srcset`'s in the options, the Kirbytag syntax stays the same. Just the output changes.
 
-### … As File Method
+### … As file method
 
 `$file->placeholderUri()` creates and returns the URI-encoded SVG placeholder.
 
@@ -69,11 +69,11 @@ If you have enabled `srcset`'s in the options, the Kirbytag syntax stays the sam
 <img src="<?= $image->placeholderUri() ?>" data-src="<?= $image->url() ?>" data-lazyload alt="<?= $image->alt() ?>">
 ```
 
-## Lazy Loading in the Frontend
+## Lazy loading in the frontend
 
 You have two options to lazily load the larger image.
 
-### Use the Included Lazyload Hook
+### Use the included lazyload hook
 
 ```js
 import { useLazyload } from './src/useLazyload'
@@ -88,7 +88,7 @@ You may inspect the source to gain more information about options. In a nutshell
 
 useLazyload supports setting the `sizes` attribute automatically, corresponding to the current size of your image. For this to work, the `data-sizes` attribute has to be set to `auto`. If you have `srcset`'s enabled in your configuration, this is already done for you when using the `(blurryimage: …)` Kirbytag.
 
-### Use a Lazy Loader of Your Choice
+### Use a lazy loader of your choice
 
 Each parsed Kirbytag adds the `data-lazyload` attribute to the `img` element.
 
@@ -126,9 +126,9 @@ return [
 ]
 ```
 
-## Placeholders in Action
+## Placeholders in action
 
-> Note: Slowed down so that you can see better how placeholders look.
+> Note: GIF is slowed down so to grasp visually how placeholders look before the image kicks in.
 
 ![GIF showing plugin in action](./.github/kirby-blurry-placeholder-preview.gif)
 

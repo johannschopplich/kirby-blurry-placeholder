@@ -1,42 +1,47 @@
-[
-    {
-        "name": "getkirby/composer-installer",
-        "version": "1.2.0",
-        "version_normalized": "1.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/getkirby/composer-installer.git",
-            "reference": "240a8b2c275d61b66601feb58222b7d34bc6cf1e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/getkirby/composer-installer/zipball/240a8b2c275d61b66601feb58222b7d34bc6cf1e",
-            "reference": "240a8b2c275d61b66601feb58222b7d34bc6cf1e",
-            "shasum": ""
-        },
-        "require": {
-            "composer-plugin-api": "^1.0 || ^2.0"
-        },
-        "require-dev": {
-            "composer/composer": "^1.8 || 2.0.*@dev",
-            "phpunit/phpunit": "^7.0"
-        },
-        "time": "2020-09-13T14:43:34+00:00",
-        "type": "composer-plugin",
-        "extra": {
-            "class": "Kirby\\ComposerInstaller\\Plugin"
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Kirby\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "description": "Kirby's custom Composer installer for the Kirby CMS and for Kirby plugins",
-        "homepage": "https://getkirby.com"
-    }
-]
+{
+    "packages": [
+        {
+            "name": "getkirby/composer-installer",
+            "version": "1.2.0",
+            "version_normalized": "1.2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/getkirby/composer-installer.git",
+                "reference": "240a8b2c275d61b66601feb58222b7d34bc6cf1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/getkirby/composer-installer/zipball/240a8b2c275d61b66601feb58222b7d34bc6cf1e",
+                "reference": "240a8b2c275d61b66601feb58222b7d34bc6cf1e",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0 || ^2.0"
+            },
+            "require-dev": {
+                "composer/composer": "^1.8 || 2.0.*@dev",
+                "phpunit/phpunit": "^7.0"
+            },
+            "time": "2020-09-13T14:43:34+00:00",
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Kirby\\ComposerInstaller\\Plugin"
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Kirby\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Kirby's custom Composer installer for the Kirby CMS and for Kirby plugins",
+            "homepage": "https://getkirby.com",
+            "install-path": "../getkirby/composer-installer"
+        }
+    ],
+    "dev": false,
+    "dev-package-names": []
+}

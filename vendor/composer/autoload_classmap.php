@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'KirbyExtended\\BlurryPlaceholder' => $baseDir . '/classes/KirbyExtended/BlurryPlaceholder.php',
     'KirbyExtended\\BlurryPlaceholderHelpers' => $baseDir . '/classes/KirbyExtended/BlurryPlaceholderHelpers.php',
     'Kirby\\ComposerInstaller\\CmsInstaller' => $vendorDir . '/getkirby/composer-installer/src/ComposerInstaller/CmsInstaller.php',

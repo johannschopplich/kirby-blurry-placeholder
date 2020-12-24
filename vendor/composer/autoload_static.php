@@ -26,6 +26,7 @@ class ComposerStaticInit43b432361c947b179937ac6da4e95538
     );
 
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'KirbyExtended\\BlurryPlaceholder' => __DIR__ . '/../..' . '/classes/KirbyExtended/BlurryPlaceholder.php',
         'KirbyExtended\\BlurryPlaceholderHelpers' => __DIR__ . '/../..' . '/classes/KirbyExtended/BlurryPlaceholderHelpers.php',
         'Kirby\\ComposerInstaller\\CmsInstaller' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/CmsInstaller.php',

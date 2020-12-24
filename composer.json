@@ -19,12 +19,7 @@
   ],
   "require": {
     "php": ">=7.3.0",
-    "getkirby/composer-installer": "^1.1"
-  },
-  "require-dev": {
-    "getkirby/cms": "^3.0",
-    "phpstan/phpstan": "^0.12",
-    "phpunit/phpunit": "^9.0"
+    "getkirby/composer-installer": "^1.2"
   },
   "config": {
     "optimize-autoloader": true,
@@ -34,14 +29,5 @@
     "psr-4": {
       "KirbyExtended\\": "classes/KirbyExtended/"
     }
-  },
-  "scripts": {
-    "analyze": "phpstan analyse",
-    "fix": "php-cs-fixer fix --config .php_cs",
-    "test": "phpunit",
-    "dist": "composer install --no-dev --optimize-autoloader"
-  },
-  "extra": {
-    "kirby-cms-path": false
   }
 }

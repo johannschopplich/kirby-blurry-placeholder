@@ -5,7 +5,8 @@ namespace KirbyExtended;
 use Kirby\Cms\File;
 use Kirby\Exception\InvalidArgumentException;
 
-class BlurryPlaceholder {
+class BlurryPlaceholder
+{
     /**
      * Creates a blurry image placeholder
      *
@@ -13,7 +14,8 @@ class BlurryPlaceholder {
      * @return string
      * @throws InvalidArgumentException
      */
-    public static function image(File $file): string {
+    public static function image(File $file): string
+    {
         $pixelTarget = option('kirby-extended.blurry-placeholder.pixel-target', 60);
 
         // Aims for an image of ~P pixels (w * h = ~P)
@@ -52,7 +54,8 @@ class BlurryPlaceholder {
      * @return string
      * @throws InvalidArgumentException
      */
-    public static function uri(File $file): string {
+    public static function uri(File $file): string
+    {
         $svg = self::image($file);
         $dataUri = 'data:image/svg+xml;charset=utf-8,' . BlurryPlaceholderHelpers::svgToUri($svg);
 

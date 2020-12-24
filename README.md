@@ -107,7 +107,7 @@ Thus you can let your lazy loader of choice select these elements by passing `[d
 | `srcset.preset` | `null` | A preset passed to Kirby's `srcset` method when using the Kirbytag.
 | `srcset.sizes` | `auto` | String for the `data-sizes` attribute when using the Kirbytag.
 
-> All of the `srcset` option have to be wrapped in an array.
+> All of the `srcset` options have to be wrapped in an array.
 
 To give an example for your `config.php`:
 
@@ -131,10 +131,6 @@ return [
 > Note: GIF is slowed down so to grasp visually how placeholders look before the image kicks in.
 
 ![GIF showing plugin in action](./.github/kirby-blurry-placeholder-preview.gif)
-
-## TODO
-
-- [ ] Add tests
 
 ## Credits
 

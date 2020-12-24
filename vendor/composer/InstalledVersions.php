@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '3d18f62c3fd085b7e710c86637f41cb7aae3bd88',
+    'reference' => 'adb1300732a80553753a6326def4afd15d11ec22',
     'name' => 'johannschopplich/kirby-blurry-placeholder',
   ),
   'versions' => 
@@ -50,7 +50,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '3d18f62c3fd085b7e710c86637f41cb7aae3bd88',
+      'reference' => 'adb1300732a80553753a6326def4afd15d11ec22',
     ),
   ),
 );

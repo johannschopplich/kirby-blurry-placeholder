@@ -1,9 +1,14 @@
 {
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "14a24e3d942b371d35966fc3e2d21fdf",
     "packages": [
         {
             "name": "getkirby/composer-installer",
             "version": "1.2.0",
-            "version_normalized": "1.2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getkirby/composer-installer.git",
@@ -22,12 +27,10 @@
                 "composer/composer": "^1.8 || 2.0.*@dev",
                 "phpunit/phpunit": "^7.0"
             },
-            "time": "2020-09-13T14:43:34+00:00",
             "type": "composer-plugin",
             "extra": {
                 "class": "Kirby\\ComposerInstaller\\Plugin"
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Kirby\\": "src/"
@@ -43,9 +46,18 @@
                 "issues": "https://github.com/getkirby/composer-installer/issues",
                 "source": "https://github.com/getkirby/composer-installer/tree/1.2.0"
             },
-            "install-path": "../getkirby/composer-installer"
+            "time": "2020-09-13T14:43:34+00:00"
         }
     ],
-    "dev": true,
-    "dev-package-names": []
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.3.0"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }

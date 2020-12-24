@@ -2,14 +2,16 @@
 
 namespace KirbyExtended;
 
-class BlurryPlaceholderHelpers {
+class BlurryPlaceholderHelpers
+{
     /**
      * Returns the URI-encoded string of an SVG
      *
      * @param string $data
      * @return string
      */
-    public static function svgToUri(string $data): string {
+    public static function svgToUri(string $data): string
+    {
         // Optimizes the data URI length by deleting line breaks and
         // removing unnecessary spaces
         $data = preg_replace('/\s+/', ' ', $data);

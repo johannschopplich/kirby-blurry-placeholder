@@ -102,20 +102,17 @@ Thus you can let your lazy loader of choice select these elements by passing `[d
 
 | Option | Default | Description |
 | --- | --- | --- |
-| `pixel-target` | `60` | Aim for a placeholder image of ~P pixels (w * h = ~P).
-| `srcset.enable` | `false` | Boolean indicating if responsive images should be created when using the Kirbytag.
-| `srcset.preset` | `null` | A preset passed to Kirby's `srcset` method when using the Kirbytag.
-| `srcset.sizes` | `auto` | String for the `data-sizes` attribute when using the Kirbytag.
+| `pixel-target` | `60` | Aim for a placeholder image of ~P pixels (w * h = ~P). |
+| `srcset.enable` | `false` | Boolean indicating if responsive images should be created when using the Kirbytag. |
+| `srcset.preset` | `null` | A preset passed to Kirby's `srcset` method when using the Kirbytag. |
+| `srcset.sizes` | `auto` | String for the `data-sizes` attribute when using the Kirbytag. |
 
 > All of the `srcset` options have to be wrapped in an array.
 
 To give an example for your `config.php`:
 
 ```php
-<?php
-
 return [
-    // …
     'kirby-extended.blurry-placeholder' => [
         'pixel-target' => 75,
         'srcset' => [

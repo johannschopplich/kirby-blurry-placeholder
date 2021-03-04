@@ -11,14 +11,6 @@ const debounceFn = (fn, delay = 250) => {
   }
 }
 
-const calcSizes = elements => {
-  for (const element of elements) {
-    if (element.dataset.sizes === 'auto') {
-      element.sizes = `${element.offsetWidth}px`
-    }
-  }
-}
-
 const load = element => {
   const newSrc = element.dataset.src
   if (newSrc) element.src = newSrc
@@ -26,8 +18,10 @@ const load = element => {
   const newSrcset = element.dataset.srcset
   if (newSrcset) {
     element.srcset = newSrcset
-    if (element.dataset.sizes === 'auto') {
-      element.sizes = `${element.offsetWidth}px`
+
+    const newSizes = element.dataset.sizes
+    if (newSizes) {
+      element.sizes = newSizes === 'auto' ? `${element.offsetWidth}px` : newSizes
     }
   }
 
@@ -35,6 +29,14 @@ const load = element => {
 }
 
 const isLoaded = element => element.dataset.loaded === 'true'
+
+const recalcSizes = elements => {
+  for (const element of elements) {
+    if (element.dataset.sizes === 'auto') {
+      element.sizes = `${element.offsetWidth}px`
+    }
+  }
+}
 
 const onIntersection = loaded => (entries, observer) => {
   for (const entry of entries) {
@@ -93,7 +95,7 @@ export function useLazyload (selector = '[data-lazyload]', options = {}) {
         observer.observe(element)
       }
 
-      const debounced = debounceFn(() => calcSizes(elements), 100)
+      const debounced = debounceFn(() => recalcSizes(elements), 100)
       window.addEventListener('resize', debounced)
     },
 

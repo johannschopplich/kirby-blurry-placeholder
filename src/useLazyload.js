@@ -1,62 +1,65 @@
-const isCrawler = !('onscroll' in window) || /(gle|ing|ro)bot|crawl|spider/i.test(navigator.userAgent)
+const isCrawler =
+  !("onscroll" in window) ||
+  /(gle|ing|ro)bot|crawl|spider/i.test(navigator.userAgent);
 
 const debounceFn = (fn, delay = 250) => {
-  let timeoutId
+  let timeoutId;
   return (...args) => {
-    if (timeoutId) clearTimeout(timeoutId)
+    if (timeoutId) clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
-      timeoutId = null
-      fn(...args)
-    }, delay)
-  }
-}
+      timeoutId = null;
+      fn(...args);
+    }, delay);
+  };
+};
 
-const load = element => {
-  const newSrc = element.dataset.src
-  if (newSrc) element.src = newSrc
+const load = (element) => {
+  const newSrc = element.dataset.src;
+  if (newSrc) element.src = newSrc;
 
-  const newSrcset = element.dataset.srcset
+  const newSrcset = element.dataset.srcset;
   if (newSrcset) {
-    element.srcset = newSrcset
+    element.srcset = newSrcset;
 
-    const newSizes = element.dataset.sizes
+    const newSizes = element.dataset.sizes;
     if (newSizes) {
-      element.sizes = newSizes === 'auto' ? `${element.offsetWidth}px` : newSizes
+      element.sizes =
+        newSizes === "auto" ? `${element.offsetWidth}px` : newSizes;
     }
   }
 
-  element.dataset.loaded = 'true'
-}
+  element.dataset.loaded = "true";
+};
 
-const isLoaded = element => element.dataset.loaded === 'true'
+const isLoaded = (element) => element.dataset.loaded === "true";
 
-const recalcSizes = elements => {
+const recalcSizes = (elements) => {
   for (const element of elements) {
-    if (element.dataset.sizes === 'auto') {
-      element.sizes = `${element.offsetWidth}px`
+    if (element.dataset.sizes === "auto") {
+      element.sizes = `${element.offsetWidth}px`;
     }
   }
-}
+};
 
-const onIntersection = loaded => (entries, observer) => {
+const onIntersection = (loaded) => (entries, observer) => {
   for (const entry of entries) {
     if (entry.intersectionRatio > 0 || entry.isIntersecting) {
-      const { target } = entry
-      observer.unobserve(target)
+      const { target } = entry;
+      observer.unobserve(target);
 
-      if (isLoaded(target)) continue
-      load(target)
-      loaded(target)
+      if (isLoaded(target)) continue;
+      load(target);
+      loaded(target);
     }
   }
-}
+};
 
 const getElements = (selector, root = document) => {
-  if (selector instanceof Element) return [selector]
-  if (selector instanceof NodeList) return [...selector]
+  if (selector instanceof Element) return [selector];
+  if (selector instanceof NodeList) return [...selector];
 
-  return root.querySelectorAll(selector)
-}
+  return root.querySelectorAll(selector);
+};
 
 /**
  * SEO-friendly lazyload implementation derivatised from lozad.js
@@ -65,47 +68,47 @@ const getElements = (selector, root = document) => {
  * @param {object} [options] Optional default options
  * @returns {object} Object containing `observe` & `triggerLoad` methods and initialized observers
  */
-export function useLazyload (selector = '[data-lazyload]', options = {}) {
+export function useLazyload(selector = "[data-lazyload]", options = {}) {
   const {
     root,
-    rootMargin = '0px',
+    rootMargin = "0px",
     threshold = 0,
-    loaded = () => {}
-  } = options
+    loaded = () => {},
+  } = options;
 
   const observer = new IntersectionObserver(onIntersection(loaded), {
     root,
     rootMargin,
-    threshold
-  })
+    threshold,
+  });
 
   return {
-    observe () {
-      const elements = getElements(selector, root)
+    observe() {
+      const elements = getElements(selector, root);
 
       for (const element of elements) {
-        if (isLoaded(element)) continue
+        if (isLoaded(element)) continue;
 
         if (isCrawler) {
-          load(element)
-          loaded(element)
-          continue
+          load(element);
+          loaded(element);
+          continue;
         }
 
-        observer.observe(element)
+        observer.observe(element);
       }
 
-      const debounced = debounceFn(() => recalcSizes(elements), 100)
-      window.addEventListener('resize', debounced)
+      const debounced = debounceFn(() => recalcSizes(elements), 100);
+      window.addEventListener("resize", debounced);
     },
 
-    triggerLoad (element) {
-      if (isLoaded(element)) return
+    triggerLoad(element) {
+      if (isLoaded(element)) return;
 
-      load(element)
-      loaded(element)
+      load(element);
+      loaded(element);
     },
 
-    observer
-  }
+    observer,
+  };
 }

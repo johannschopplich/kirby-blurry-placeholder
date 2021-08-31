@@ -1,3 +1,12 @@
+// DEPRECATED
+//
+// This file is kept for compatibility reasons. The library has been refactored
+// and rewritten in TypeScript. Consider switching to:
+// https://github.com/johannschopplich/loadeer
+//
+// You can now just use for the same outcome, for example:
+// `<script src="https://unpkg.com/loadeer" defer init></script>`
+
 const isCrawler =
   !("onscroll" in window) ||
   /(gle|ing|ro)bot|crawl|spider/i.test(navigator.userAgent);

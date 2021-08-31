@@ -3,7 +3,6 @@
 namespace KirbyExtended;
 
 use Kirby\Cms\File;
-use Kirby\Exception\InvalidArgumentException;
 
 class BlurryPlaceholder
 {
@@ -12,7 +11,7 @@ class BlurryPlaceholder
      *
      * @param \Kirby\Cms\File $file
      * @return string
-     * @throws InvalidArgumentException
+     * @throws \Kirby\Exception\InvalidArgumentException
      */
     public static function image(File $file): string
     {
@@ -52,13 +51,38 @@ class BlurryPlaceholder
      *
      * @param \Kirby\Cms\File $file
      * @return string
-     * @throws InvalidArgumentException
+     * @throws \Kirby\Exception\InvalidArgumentException
      */
     public static function uri(File $file): string
     {
         $svg = self::image($file);
-        $dataUri = 'data:image/svg+xml;charset=utf-8,' . BlurryPlaceholderHelpers::svgToUri($svg);
+        $dataUri = 'data:image/svg+xml;charset=utf-8,' . static::svgToUri($svg);
 
         return $dataUri;
+    }
+
+    /**
+     * Returns the URI-encoded string of an SVG
+     *
+     * @param string $data
+     * @return string
+     */
+    private static function svgToUri(string $data): string
+    {
+        // Optimizes the data URI length by deleting line breaks and
+        // removing unnecessary spaces
+        $data = preg_replace('/\s+/', ' ', $data);
+        $data = preg_replace('/> </', '><', $data);
+
+        $data = rawurlencode($data);
+
+        // Back-decode certain characters to improve compression
+        $data = str_replace(
+            ['%20', '%2F', '%3A', '%3D'],
+            [' ', '/', ':', '='],
+            $data
+        );
+
+        return $data;
     }
 }

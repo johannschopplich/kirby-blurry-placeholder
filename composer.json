@@ -21,13 +21,16 @@
     "php": ">=7.3.0",
     "getkirby/composer-installer": "^1.2"
   },
-  "config": {
-    "optimize-autoloader": true,
-    "sort-packages": true
+  "require-dev": {
+    "getkirby/cms": "^3.0"
   },
-  "autoload": {
-    "psr-4": {
-      "KirbyExtended\\": "classes/KirbyExtended/"
-    }
+  "scripts": {
+    "dist": "composer install --no-dev --optimize-autoloader"
+  },
+  "config": {
+    "optimize-autoloader": true
+  },
+  "extra": {
+    "kirby-cms-path": false
   }
 }

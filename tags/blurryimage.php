@@ -56,14 +56,14 @@ return [
 
         if ($tag->file !== null) {
             $dataUri = $tag->file->placeholderUri();
-            $useSrcset = $tag->kirby()->option('kirby-extended.blurry-placeholder.srcset.enable');
-            $preset = $tag->kirby()->option('kirby-extended.blurry-placeholder.srcset.preset');
-            $sizes = $tag->kirby()->option('kirby-extended.blurry-placeholder.srcset.sizes');
+            $preset = $tag->kirby()->option('kirby-extended.blurry-placeholder.kirbytag.srcset-preset');
+            $sizes = $tag->kirby()->option('kirby-extended.blurry-placeholder.kirbytag.sizes', 'auto');
+            $hasPreset = $preset !== null;
 
             $image = Html::img($dataUri, A::merge($imageAttr, [
-                'data-src' => !$useSrcset ? $tag->src : null,
-                'data-srcset' => $useSrcset ? $tag->file->srcset($preset) : null,
-                'data-sizes' => $useSrcset ? $sizes : null,
+                'data-src' => !$hasPreset ? $tag->src : null,
+                'data-srcset' => $hasPreset ? $tag->file->srcset($preset) : null,
+                'data-sizes' => $hasPreset ? $sizes : null,
                 'data-lazyload' => 'true',
             ]));
         } else {

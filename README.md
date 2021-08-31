@@ -2,19 +2,21 @@
 
 # Kirby Blurry Placeholder
 
-This plugin implements progressive image loading, proving a better user experience. Tiny thumbnails which inherit the aspect ratio of their source image are combined with a blurry effect for a better placeholder than a solid color, without sacrificing payload.
+This plugin implements progressive image loading, providing a better user experience. Tiny thumbnails which inherit the aspect ratio of their source image are combined with a blurry effect for a better placeholder than solid colors, without sacrificing payload.
 
 How it works:
+
 1. An inline, URI-encoded SVG fills the `src` attribute of a given image element. The blurred image is wrapped in a SVG to avoid rasterizing the filter.
 2. The large images are then only requests when they are within the viewport.
 
-## Key features
+## Key Features
 
 - ✨ Avoids content jumping (keeping aspect ratio)
+- 🏗 Available as [image block](blocks/image.php)
 - 🖼 Available as Kirbytag
-- 🗃 Extends `Kirby\Cms\File` methods
 - 🔍 SEO-friendly
-- ⚡️ Vanilla JavaScript lazy loader included
+- 🗃 Extends `Kirby\Cms\File` methods
+- ⚡️ Vanilla JavaScript lazy loading library included
 
 ## Requirements
 
@@ -41,16 +43,23 @@ composer require johannschopplich/kirby-blurry-placeholder
 
 ## Usage
 
-### … As `(blurryimage: …)` Kirbytag
+### As Kirby Image Block
 
-This plugin doesn't extend the core `(image: …)` Kirbytag, but builds upon it. So all of the options present are available in the plugin's Kirbytag as well.
+Each Kirby site is tailored to its use-case, thus this plugin won't add a block by default. Instead, take a look into the provided [image block example](blocks/image.php) to get an idea of how to implement blurry placeholders within blocks.
+
+Of course, you can just copy the block into your `site/snippets/blocks` folder of your current Kirby project and adapt it to your needs afterwards!
+
+### As `(blurryimage: …)` Kirbytag
+
+This plugin doesn't overwrite the core `(image: …)` Kirbytag, but builds upon it for a custom tag. Thus, all of the options present in Kirby's `(image: …)` tag are available in the plugin's tag as well.
 
 The `(blurryimage: …)` tag:
+
 - Encodes a blurry image placeholder as URI in the `src` attribute.
 - Sets the original image's URL as `data-src` or a set of responsive images as `data-srcset`.
 - Adds a `data-lazyload` attribute for selection by the lazy loading library.
 
-Example use within a KirbyText field:
+Example use within a [KirbyText](https://getkirby.com/docs/reference/text/kirbytags) field:
 
 ```
 (blurryimage: myimage.jpg)
@@ -60,52 +69,67 @@ Example use within a KirbyText field:
 
 If you have enabled `srcset`'s in the options, the Kirbytag syntax stays the same. Just the output changes.
 
-### … As file method
+### As File Method
 
 `$file->placeholderUri()` creates and returns the URI-encoded SVG placeholder.
 
 ```html
 // Using the `placeholderUri` for an inlined image in the `src` attribute
-<img src="<?= $image->placeholderUri() ?>" data-src="<?= $image->url() ?>" data-lazyload alt="<?= $image->alt() ?>">
+<img
+    src="<?= $image->placeholderUri() ?>"
+    data-src="<?= $image->url() ?>"
+    data-lazyload
+    alt="<?= $image->alt() ?>"
+/>
 ```
 
-## Lazy loading in the frontend
+## Lazy Loading in the Frontend
 
-You have two options to lazily load the larger image.
+To lazily load the images once they get apparent in the viewport, a JavaScript library is necessary.
 
-### Use the included lazyload hook
+I strongly recommend [🦌 Loadeer.js](https://github.com/johannschopplich/loadeer). In a nutshell, it's a tiny, performant, SEO-friendly lazy loading library and can be used with or without a build step.
+
+### Without Build Step & Auto Initialization
+
+Simply load it from a CDN:
+
+```html
+<script src="https://unpkg.com/loadeer" defer init></script>
+```
+
+- The `defer` attribute makes the script execute after HTML content is parsed.
+- The `init` attribute tells Loadeer.js to automatically initialize and watch all elements that have a `data-lazyload` attribute.
+
+### Import As ES Module
+
+You can use the ES module build by installing the `loadeer` npm package:
 
 ```js
-import { useLazyload } from './src/useLazyload'
+import Loadeer from "loadeer";
 
-const observer = useLazyload()
-observer.observe()
+const loadeer = new Loadeer();
+loadeer.observe();
 ```
 
-You may inspect the source to gain more information about options. In a nutshell, it's a SEO-friendly and modernized derivate of [lozad.js](https://github.com/ApoorvSaxena/lozad.js).
+### Automatically Setting the Sizes Attribute
 
-**Automatically setting the sizes attribute**
+Loadeer.js supports setting the `sizes` attribute automatically, corresponding to the current size of your image. For this to work, the `data-sizes` attribute has to be set to `auto`. If you have `srcset`'s enabled in your configuration, this is already done for you when using the `(blurryimage: …)` Kirbytag.
 
-useLazyload supports setting the `sizes` attribute automatically, corresponding to the current size of your image. For this to work, the `data-sizes` attribute has to be set to `auto`. If you have `srcset`'s enabled in your configuration, this is already done for you when using the `(blurryimage: …)` Kirbytag.
+### Use a Lazy Loader of Your Choice
 
-### Use a lazy loader of your choice
+Each parsed Kirbytag adds the `data-lazyload` attribute to the `img` element. Consequently, you can let a lazy loader of choice select these elements by passing `[data-lazyload]` as selector.
 
-Each parsed Kirbytag adds the `data-lazyload` attribute to the `img` element.
-
-Thus you can let your lazy loader of choice select these elements by passing `[data-lazyload]` as selector.
-
-> Note: A `.lazyload` class is intentionally not added to avoid potential naming conflicts. I also prefer data attributes over classes for selectors only used by JavaScript manipulation. 🤷‍♂️
+> Note: A `.lazyload` class is intentionally not added to avoid potential naming conflicts. I prefer data attributes over classes for selectors only used for JavaScript manipulation. 🤷‍♂️
 
 ## Options
 
-> All options are namespaced under `kirby-extended.blurry-placeholder`.
+> All options listed have to be prefixed with `kirby-extended.blurry-placeholder.` in your `config.php`.
 
-| Option | Default | Description |
-| --- | --- | --- |
-| `pixel-target` | `60` | Aim for a placeholder image of ~P pixels (w * h = ~P). |
-| `srcset.enable` | `false` | Boolean indicating if responsive images should be created when using the Kirbytag. |
-| `srcset.preset` | `null` | A preset passed to Kirby's `srcset` method when using the Kirbytag. |
-| `srcset.sizes` | `auto` | String for the `data-sizes` attribute when using the Kirbytag. |
+| Option                   | Default | Description                                                                                                                                                                                                            |
+| ------------------------ | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pixel-target`           | `60`    | Aim for a placeholder image of ~P pixels (w \* h = ~P).                                                                                                                                                                |
+| `kirbytag.srcset-preset` | `null`  | A preset passed to [Kirby's `srcset` method](https://getkirby.com/docs/reference/objects/cms/file/srcset#define-presets) when using the Kirbytag. If `null`, the `src` attribute will be rendered instead of `srcset`. |
+| `kirbytag.sizes`         | `auto`  | String for the `data-sizes` attribute if the Kirbytag works with `srcset`'s.                                                                                                                                           |
 
 > All of the `srcset` options have to be wrapped in an array.
 
@@ -115,12 +139,11 @@ To give an example for your `config.php`:
 return [
     'kirby-extended.blurry-placeholder' => [
         'pixel-target' => 75,
-        'srcset' => [
-            'enable' => true,
-            'preset' => 'text'
+        'kirbytag' => [
+            'srcset-preset' => 'article'
         ]
     ]
-]
+];
 ```
 
 ## Placeholders in action
@@ -132,7 +155,6 @@ return [
 ## Credits
 
 - AMP's [blurry image implementation](https://github.com/ampproject/amp-toolbox/blob/0c8755016ae825b11b63b98be83271fd14cc0486/packages/optimizer/lib/transformers/AddBlurryImagePlaceholders.js)
-- [lozad.js](https://github.com/ApoorvSaxena/lozad.js)
 
 ## License
 

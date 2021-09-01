@@ -1,6 +1,5 @@
 <?php
 
-use Kirby\Http\Url;
 use Kirby\Toolkit\Html;
 
 /** @var \Kirby\Cms\Block $block */

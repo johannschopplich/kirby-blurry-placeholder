@@ -45,9 +45,9 @@ composer require johannschopplich/kirby-blurry-placeholder
 
 ### As Kirby Image Block
 
-Each Kirby site is tailored to its use-case, thus this plugin won't add a block by default. Instead, take a look into the provided [image block example](blocks/image.php) to get an idea of how to implement blurry placeholders within blocks.
+Each Kirby site is tailored to its own use-case, thus this plugin won't add a Kirby block by default. Instead, take a look into the provided [image block example](blocks/image.php) to get an idea of how to implement blurry placeholders within blocks.
 
-Of course, you can just copy the block into your `site/snippets/blocks` folder of your current Kirby project and adapt it to your needs afterwards!
+Of course, you can just copy the block into your `site/snippets/blocks` folder of your current Kirby project and adapt it to your needs!
 
 ### As `(blurryimage: …)` Kirbytag
 
@@ -87,7 +87,7 @@ If you have enabled `srcset`'s in the options, the Kirbytag syntax stays the sam
 
 To lazily load the images once they get apparent in the viewport, a JavaScript library is necessary.
 
-I strongly recommend [🦌 Loadeer.js](https://github.com/johannschopplich/loadeer). In a nutshell, it's a tiny, performant, SEO-friendly lazy loading library and can be used with or without a build step.
+I strongly recommend [🦌 Loadeer.js](https://github.com/johannschopplich/loadeer). In a nutshell, it's a tiny, performant, SEO-friendly lazy loading library and can be used with or without a build step if you don't have a frontend asset build chain.
 
 ### Without Build Step & Auto Initialization
 
@@ -107,11 +107,11 @@ You can use the ES module build by installing the `loadeer` npm package:
 ```js
 import Loadeer from "loadeer";
 
-const loadeer = new Loadeer();
+const instance = new Loadeer();
 loadeer.observe();
 ```
 
-### Automatically Setting the Sizes Attribute
+### Automatically Calculate the `sizes` Attribute
 
 Loadeer.js supports setting the `sizes` attribute automatically, corresponding to the current size of your image. For this to work, the `data-sizes` attribute has to be set to `auto`. If you have `srcset`'s enabled in your configuration, this is already done for you when using the `(blurryimage: …)` Kirbytag.
 
@@ -125,11 +125,11 @@ Each parsed Kirbytag adds the `data-lazyload` attribute to the `img` element. Co
 
 > All options listed have to be prefixed with `kirby-extended.blurry-placeholder.` in your `config.php`.
 
-| Option                   | Default | Description                                                                                                                                                                                                            |
-| ------------------------ | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pixel-target`           | `60`    | Aim for a placeholder image of ~P pixels (w \* h = ~P).                                                                                                                                                                |
-| `kirbytag.srcset-preset` | `null`  | A preset passed to [Kirby's `srcset` method](https://getkirby.com/docs/reference/objects/cms/file/srcset#define-presets) when using the Kirbytag. If `null`, the `src` attribute will be rendered instead of `srcset`. |
-| `kirbytag.sizes`         | `auto`  | String for the `data-sizes` attribute if the Kirbytag works with `srcset`'s.                                                                                                                                           |
+| Option                   | Default | Description                                                                                                                                                                                                                    |
+| ------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pixel-target`           | `60`    | Aim for a placeholder image of ~P pixels (`w \* h = ~P`).                                                                                                                                                                      |
+| `kirbytag.srcset-preset` | `null`  | A preset passed to [Kirby's `srcset` method](https://getkirby.com/docs/reference/objects/cms/file/srcset#define-presets) when using the Kirbytag. If `null` (default), a `src` attribute will be rendered instead of `srcset`. |
+| `kirbytag.sizes`         | `auto`  | String for the `data-sizes` attribute if the Kirbytag works with `srcset`'s.                                                                                                                                                   |
 
 > All of the `srcset` options have to be wrapped in an array.
 
@@ -138,7 +138,7 @@ To give an example for your `config.php`:
 ```php
 return [
     'kirby-extended.blurry-placeholder' => [
-        'pixel-target' => 75,
+        'pixel-target' => 60,
         'kirbytag' => [
             'srcset-preset' => 'article'
         ]

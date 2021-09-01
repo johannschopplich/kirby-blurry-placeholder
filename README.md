@@ -13,9 +13,9 @@ How it works:
 
 - ✨ Avoids content jumping (keeping aspect ratio)
 - 🏗 Available as [image block](blocks/image.php)
-- 🖼 Available as Kirbytag
+- 🖼 Available in KirbyText with custom Kirbytag
 - 🔍 SEO-friendly
-- 🗃 Extends `Kirby\Cms\File` methods
+- 🗃 Extends [file methods](https://getkirby.com/docs/reference/plugins/extensions/file-methods)
 - ⚡️ Vanilla JavaScript lazy loading library included
 
 ## Requirements
@@ -87,7 +87,9 @@ If you have enabled `srcset`'s in the options, the Kirbytag syntax stays the sam
 
 To lazily load the images once they get apparent in the viewport, a JavaScript library is necessary.
 
-I strongly recommend [🦌 Loadeer.js](https://github.com/johannschopplich/loadeer). In a nutshell, it's a tiny, performant, SEO-friendly lazy loading library and can be used with or without a build step if you don't have a frontend asset build chain.
+I strongly recommend [🦌 Loadeer.js](https://github.com/johannschopplich/loadeer). It has been written with this Kirby plugin in mind. In a nutshell, it's a tiny, performant, SEO-friendly lazy loading library and can be used with or without a build step if you don't have a frontend asset build chain.
+
+> ℹ️ Since v1.3.0, the [lazy loading hook](src/useLazyload.js) provided by this plugin has been replaced by Loadeer.js – a rewritten version of the former hook.
 
 ### Without Build Step & Auto Initialization
 

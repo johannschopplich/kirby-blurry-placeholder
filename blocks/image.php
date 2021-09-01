@@ -13,8 +13,13 @@ $img     = null;
 if ($block->location() === 'web') {
   $img = Html::img($block->src(), ['alt' => $alt]);
 } elseif ($image = $block->image()->toFile()) {
-  if ($alt->isEmpty()) $alt = $image->alt();
-  if ($caption->isEmpty()) $caption = $image->caption();
+  if ($alt->isEmpty()) {
+    $alt = $image->alt();
+  }
+
+  if ($caption->isEmpty()) {
+    $caption = $image->caption();
+  }
 
   $img = Html::img(
     $image->placeholderUri(),

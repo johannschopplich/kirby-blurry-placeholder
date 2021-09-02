@@ -12,7 +12,7 @@ How it works:
 ## Key Features
 
 - ✨ Avoids content jumping (keeping aspect ratio)
-- 🏗 Available as [image block](blocks/image.php)
+- 🏗 Available as [image block](./snippets/blocks/image.php)
 - 🖼 Available in KirbyText with custom Kirbytag
 - 🔍 SEO-friendly
 - 🗃 Extends [file methods](https://getkirby.com/docs/reference/plugins/extensions/file-methods)
@@ -45,7 +45,7 @@ composer require johannschopplich/kirby-blurry-placeholder
 
 ### As Kirby Image Block
 
-Each Kirby site is tailored to its own use-case, thus this plugin won't add a Kirby block by default. Instead, take a look into the provided [image block example](blocks/image.php) to get an idea of how to implement blurry placeholders within blocks.
+Each Kirby site is tailored to its own use-case, thus this plugin won't add a Kirby block by default. Instead, take a look into the provided [image block example](./snippets/blocks/image.php) to get an idea of how to implement blurry placeholders within blocks.
 
 Of course, you can just copy the block into your `site/snippets/blocks` folder of your current Kirby project and adapt it to your needs!
 
@@ -89,7 +89,7 @@ To lazily load the images once they get apparent in the viewport, a JavaScript l
 
 I strongly recommend [🦌 Loadeer.js](https://github.com/johannschopplich/loadeer). It has been written with this Kirby plugin in mind. In a nutshell, it's a tiny, performant, SEO-friendly lazy loading library and can be used with or without a build step if you don't have a frontend asset build chain.
 
-> ℹ️ Since v1.3.0, the [lazy loading hook](src/useLazyload.js) provided by this plugin has been replaced by Loadeer.js – a rewritten version of the former hook.
+> ℹ️ Since v1.3.0, the [lazy loading hook](./src/useLazyload.js) provided by this plugin has been replaced by Loadeer.js – a rewritten version of the former hook.
 
 ### Without Build Step & Auto Initialization
 

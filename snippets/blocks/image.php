@@ -7,7 +7,7 @@ $alt     = $block->alt();
 $caption = $block->caption();
 $link    = $block->link();
 $ratio   = $block->ratio()->or('auto');
-$props   = "figure-blurry-image {$ratio}";
+$props   = "figure-image ratio-{$ratio}";
 $img     = null;
 
 if ($block->location() === 'web') {
@@ -24,12 +24,12 @@ if ($block->location() === 'web') {
   $img = Html::img(
     $image->placeholderUri(),
     [
-      'alt' => $alt,
+      'data-lazyload' => 'true',
       'data-srcset' => $image->srcset(),
       'data-sizes' => 'auto',
-      'data-lazyload' => 'true',
       'width' => $image->width(),
-      'height' => $image->height()
+      'height' => $image->height(),
+      'alt' => $alt
     ]
   );
 } else {

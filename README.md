@@ -1,4 +1,4 @@
-![Preview of Kirby blurry placeholder plugin](./.github/social-preview.png)
+![Preview of Kirby blurry placeholder plugin](./.github/kirby-blurry-placeholder-plugin.png)
 
 # Kirby Blurry Placeholder
 
@@ -29,7 +29,7 @@ How it works:
 
 Download and copy this repository to `/site/plugins/kirby-blurry-placeholder`.
 
-### Git submodule
+### Git Submodule
 
 ```
 git submodule add https://github.com/johannschopplich/kirby-blurry-placeholder.git site/plugins/kirby-blurry-placeholder

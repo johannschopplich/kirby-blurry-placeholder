@@ -53,7 +53,7 @@ Of course, you can just copy the block into your `site/snippets/blocks` folder o
 
 `$file->placeholderUri()` creates and returns the URI-encoded SVG placeholder.
 
-```html
+```php
 <!-- Using the `placeholderUri` for an inlined image in the `src` attribute -->
 <img
     src="<?= $image->placeholderUri() ?>"
@@ -69,7 +69,7 @@ Of course, you can just copy the block into your `site/snippets/blocks` folder o
 
 Pass the ratio of a cropped image to the placeholder method to generate a cropped preview:
 
-```html
+```php
 <?php $cropped = $original->crop(500, 400) ?>
 <img
   src="<?= $original->placeholderUri(5/4) ?>"

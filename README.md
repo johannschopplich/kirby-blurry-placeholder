@@ -47,7 +47,37 @@ composer require johannschopplich/kirby-blurry-placeholder
 
 Each Kirby site is tailored to its own use-case, thus this plugin won't add a Kirby block by default. Instead, take a look into the provided [image block example](./snippets/blocks/image.php) to get an idea of how to implement blurry placeholders within blocks.
 
-Of course, you can just copy the block into your `site/snippets/blocks` folder of your current Kirby project and adapt it to your needs!
+Of course, you can just copy the block into your `site/snippets/blocks` folder of your current Kirby project, use it as is or adapt it to your needs!
+
+### As File Method
+
+`$file->placeholderUri()` creates and returns the URI-encoded SVG placeholder.
+
+```html
+<!-- Using the `placeholderUri` for an inlined image in the `src` attribute -->
+<img
+    src="<?= $image->placeholderUri() ?>"
+    data-src="<?= $image->url() ?>"
+    data-lazyload
+    alt="<?= $image->alt() ?>"
+/>
+```
+
+#### Cropped Images
+
+> Kirby doesn't support file methods on cropped files/images, because the latter inherit the `Kirby\Cms\FileVersion` class.
+
+Pass the ratio of a cropped image to the placeholder method to generate a cropped preview:
+
+```html
+<?php $cropped = $original->crop(500, 400) ?>
+<img
+  src="<?= $original->placeholderUri(5/4) ?>"
+  data-src="<?= $cropped->url() ?>"
+  data-lazyload
+  alt="<?= $original->alt() ?>"
+/>
+```
 
 ### As `(blurryimage: …)` Kirbytag
 
@@ -68,20 +98,6 @@ Example use within a [KirbyText](https://getkirby.com/docs/reference/text/kirbyt
 ```
 
 If you have enabled `srcset`'s in the options, the Kirbytag syntax stays the same. Just the output changes.
-
-### As File Method
-
-`$file->placeholderUri()` creates and returns the URI-encoded SVG placeholder.
-
-```html
-// Using the `placeholderUri` for an inlined image in the `src` attribute
-<img
-    src="<?= $image->placeholderUri() ?>"
-    data-src="<?= $image->url() ?>"
-    data-lazyload
-    alt="<?= $image->alt() ?>"
-/>
-```
 
 ## Lazy Loading in the Frontend
 
@@ -120,8 +136,6 @@ Loadeer.js supports setting the `sizes` attribute automatically, corresponding t
 ### Use a Lazy Loader of Your Choice
 
 Each parsed Kirbytag adds the `data-lazyload` attribute to the `img` element. Consequently, you can let a lazy loader of choice select these elements by passing `[data-lazyload]` as selector.
-
-> Note: A `.lazyload` class is intentionally not added to avoid potential naming conflicts. I prefer data attributes over classes for selectors only used for JavaScript manipulation. 🤷‍♂️
 
 ## Options
 

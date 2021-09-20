@@ -6,11 +6,11 @@ load([
 
 \Kirby\Cms\App::plugin('kirby-extended/blurry-placeholder', [
     'fileMethods' => [
-        'placeholder' => function () {
-            return \KirbyExtended\BlurryPlaceholder::image($this);
+        'placeholder' => function (?float $ratio = null) {
+            return \KirbyExtended\BlurryPlaceholder::image($this, $ratio);
         },
-        'placeholderUri' => function () {
-            return \KirbyExtended\BlurryPlaceholder::uri($this);
+        'placeholderUri' => function (?float $ratio = null) {
+            return \KirbyExtended\BlurryPlaceholder::uri($this, $ratio);
         }
     ],
     'tags' => [

@@ -53,7 +53,7 @@ Of course, you can just copy the block into your `site/snippets/blocks` folder o
 
 `$file->placeholderUri()` creates and returns the URI-encoded SVG placeholder.
 
-```php
+```html
 <!-- Using the `placeholderUri` for an inlined image in the `src` attribute -->
 <img
     src="<?= $image->placeholderUri() ?>"

@@ -6,8 +6,6 @@ use Kirby\Toolkit\Html;
 $alt     = $block->alt();
 $caption = $block->caption();
 $link    = $block->link();
-$ratio   = $block->ratio()->or('auto');
-$props   = "figure-image ratio-{$ratio}";
 $img     = null;
 
 if ($block->location() === 'web') {
@@ -37,7 +35,7 @@ if ($block->location() === 'web') {
 }
 
 ?>
-<figure<?= attr(['class' => $props], ' ') ?>>
+<figure>
   <?php if ($link->isNotEmpty()): ?>
     <a href="<?= $link->toUrl() ?>">
       <?= $img ?>

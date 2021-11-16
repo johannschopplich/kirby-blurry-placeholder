@@ -79,7 +79,7 @@ Pass the ratio of a cropped image to the placeholder method to generate a croppe
 />
 ```
 
-### As `(blurryimage: …)` Kirbytag
+### As Kirbytag
 
 This plugin doesn't overwrite the core `(image: …)` Kirbytag, but builds upon it for a custom tag. Thus, all of the options present in Kirby's `(image: …)` tag are available in the plugin's tag as well.
 

@@ -2,7 +2,7 @@
   "name": "johannschopplich/kirby-blurry-placeholder",
   "description": "Blurry image placeholders and lazy loading for better UX",
   "type": "kirby-plugin",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "keywords": [
     "kirby",
     "placeholder",
@@ -11,7 +11,7 @@
     "seo"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/johannschopplich/kirby-blurry-placeholder",
+  "homepage": "https://github.com/johannschopplich/kirby-blurry-placeholder#readme",
   "authors": [
     {
       "name": "Johann Schopplich",

@@ -126,7 +126,7 @@ You can use the ES module build by installing the `loadeer` npm package:
 import Loadeer from "loadeer";
 
 const instance = new Loadeer();
-loadeer.observe();
+instance.observe();
 ```
 
 ### Automatically Calculate the `sizes` Attribute

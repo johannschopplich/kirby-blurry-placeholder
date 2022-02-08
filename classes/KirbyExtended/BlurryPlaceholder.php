@@ -59,7 +59,8 @@ class BlurryPlaceholder
         $svg = static::image($file, $ratio);
         $dataUri = 'data:image/svg+xml;charset=utf-8,' . static::svgToUri($svg);
 
-        return $dataUri;
+        // Encode string to be compliant with W3C guidelines
+        return urlencode($dataUri);
     }
 
     /**

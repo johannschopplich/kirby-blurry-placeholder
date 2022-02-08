@@ -59,8 +59,7 @@ class BlurryPlaceholder
         $svg = static::image($file, $ratio);
         $dataUri = 'data:image/svg+xml;charset=utf-8,' . static::svgToUri($svg);
 
-        // Encode string to be compliant with W3C guidelines
-        return urlencode($dataUri);
+        return $dataUri;
     }
 
     /**
@@ -79,9 +78,10 @@ class BlurryPlaceholder
         $data = rawurlencode($data);
 
         // Back-decode certain characters to improve compression
+        // except '%20' to be compliant with W3C guidelines
         $data = str_replace(
-            ['%20', '%2F', '%3A', '%3D'],
-            [' ', '/', ':', '='],
+            ['%2F', '%3A', '%3D'],
+            ['/', ':', '='],
             $data
         );
 

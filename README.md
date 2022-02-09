@@ -137,6 +137,46 @@ Loadeer.js supports setting the `sizes` attribute automatically, corresponding t
 
 Each parsed Kirbytag adds the `data-lazyload` attribute to the `img` element. Consequently, you can let a lazy loader of choice select these elements by passing `[data-lazyload]` as selector.
 
+### Animating with the "Blur Down" Technique
+
+> ⚠️ **Disclaimer**: Please avoid copying any code until reading this section in full. This is an experimental technique that comes with caveats (mostly performance issues).
+
+When using Loadeer.js, we can target all lazyloaded images with `[data-lazyload]` and refine this selection with `[data-src]` only to target the images that haven't been fully loaded yet.
+
+```css
+img[data-lazyload][data-src] {
+  filter: blur(150px);
+  transform: scale(1.2);
+}
+```
+We can then apply a transition to such properties.
+
+```css
+/* Respect users choice for reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  img[data-lazyload] {
+    transition: 1.2s cubic-bezier(0.86, 0.07, 0.07, 0.96);
+    transition-property: filter, transform;
+    /* Hint browser at change for better performance */
+    will-change: filter, transform;
+  }
+}
+```
+
+As we are manually blurring the `img` **element** which `src` attribute is our generated SVG (so essentially the SVG is a child of our `img` element), we *need* to have a container that hides overflowing parts. For better performance we also enforce GPU rendering by applying a `transform` declaration.
+
+```css
+.img-container {
+  overflow: hidden;
+  /* Enforce GPU rendering */
+  transform: translateZ(0);
+}
+```
+
+The biggest caveat with this implementation is the transition of `filter`—users on lower-end devices will probably experience frame drops. Even using `transform` to enforce GPU rendering and using `will-change` as last resort of hinting the at the transition does not always fix such issues. In the end, it heavily depends on what devices your end users are on, how big the painted image is on the site and how many images your site features (that might all blur up at the same time).
+
+So should you implement a "blur down" transition? ***Probably not.*** If you do, strongly consider the caveats. The best animation is the one that engages users, not the one that scares them.  
+
 ## Options
 
 > All options listed have to be prefixed with `kirby-extended.blurry-placeholder.` in your `config.php`.

@@ -31,13 +31,13 @@ Download and copy this repository to `/site/plugins/kirby-blurry-placeholder`.
 
 ### Git Submodule
 
-```
+```bash
 git submodule add https://github.com/johannschopplich/kirby-blurry-placeholder.git site/plugins/kirby-blurry-placeholder
 ```
 
 ### Composer
 
-```
+```bash
 composer require johannschopplich/kirby-blurry-placeholder
 ```
 
@@ -149,6 +149,7 @@ img[data-lazyload][data-src] {
   transform: scale(1.2);
 }
 ```
+
 We can then apply a transition to such properties.
 
 ```css
@@ -173,9 +174,9 @@ As we are manually blurring the `img` **element** which `src` attribute is our g
 }
 ```
 
-The biggest caveat with this implementation is the transition of `filter`—users on lower-end devices will probably experience frame drops. Even using `transform` to enforce GPU rendering and using `will-change` as last resort of hinting the at the transition does not always fix such issues. In the end, it heavily depends on what devices your end users are on, how big the painted image is on the site and how many images your site features (that might all blur up at the same time).
+The biggest caveat with this implementation is the transition of `filter` – users on lower-end devices will probably experience frame drops. Even using `transform` to enforce GPU rendering and using `will-change` as last resort of hinting the at the transition does not always fix such issues. In the end, it heavily depends on what devices your end users are on, how big the painted image is on the site and how many images your site features (that might all blur up at the same time).
 
-So should you implement a "blur down" transition? ***Probably not.*** If you do, strongly consider the caveats. The best animation is the one that engages users, not the one that scares them.  
+So should you implement a "blur down" transition? **Probably not.** If you do, strongly consider the caveats. The best animation is the one that engages users, not the one that scares them.
 
 ## Options
 

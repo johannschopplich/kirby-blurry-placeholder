@@ -2,7 +2,7 @@
   "name": "johannschopplich/kirby-blurry-placeholder",
   "description": "Blurry image placeholders and lazy loading for better UX",
   "type": "kirby-plugin",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "keywords": [
     "kirby",
     "placeholder",
@@ -30,7 +30,10 @@
     "dist": "composer install --no-dev --optimize-autoloader"
   },
   "config": {
-    "optimize-autoloader": true
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "getkirby/composer-installer": true
+    }
   },
   "extra": {
     "kirby-cms-path": false

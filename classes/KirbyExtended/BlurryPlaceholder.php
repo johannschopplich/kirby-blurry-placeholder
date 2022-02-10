@@ -78,9 +78,10 @@ class BlurryPlaceholder
         $data = rawurlencode($data);
 
         // Back-decode certain characters to improve compression
+        // except '%20' to be compliant with W3C guidelines
         $data = str_replace(
-            ['%20', '%2F', '%3A', '%3D'],
-            [' ', '/', ':', '='],
+            ['%2F', '%3A', '%3D'],
+            ['/', ':', '='],
             $data
         );
 

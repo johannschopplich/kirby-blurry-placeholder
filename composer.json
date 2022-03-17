@@ -2,7 +2,7 @@
   "name": "johannschopplich/kirby-blurry-placeholder",
   "description": "Blurry image placeholders and lazy loading for better UX",
   "type": "kirby-plugin",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "keywords": [
     "kirby",
     "placeholder",

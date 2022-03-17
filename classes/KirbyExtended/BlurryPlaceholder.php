@@ -17,18 +17,24 @@ class BlurryPlaceholder
         $pixelTarget = option('kirby-extended.blurry-placeholder.pixel-target', 60);
 
         // Aims for an image of ~P pixels (w * h = ~P)
-        $placeholderHeight = sqrt($pixelTarget / ($ratio ?? $file->ratio()));
-        $placeholderWidth = $pixelTarget / $placeholderHeight;
+        $height = sqrt($pixelTarget / ($ratio ?? $file->ratio()));
+        $width = $pixelTarget / $height;
 
-        $placeholderImage = $file->thumb([
-            'width'   => round($placeholderWidth),
-            'height'  => round($placeholderHeight),
+        $options = [
+            'width'   => round($width),
+            'height'  => round($height),
             'crop'    => true,
-            'quality' => 60
-        ])->dataUri();
+            'quality' => 40
+        ];
 
-        $svgHeight = number_format($placeholderHeight, 2, '.', '');
-        $svgWidth = number_format($placeholderWidth, 2, '.', '');
+        if ($format = option('thumbs.format')) {
+            $options['format'] = $format;
+        }
+
+        $uri = $file->thumb($options)->dataUri();
+
+        $svgHeight = number_format($height, 2, '.', '');
+        $svgWidth = number_format($width, 2, '.', '');
 
         // Wrap the blurred image in a SVG to avoid rasterizing the filter
         $svg = <<<EOD
@@ -39,7 +45,7 @@ class BlurryPlaceholder
                   <feFuncA type="discrete" tableValues="1 1"></feFuncA>
                 </feComponentTransfer>
               </filter>
-              <image filter="url(#b)" x="0" y="0" width="100%" height="100%" href="{$placeholderImage}"></image>
+              <image filter="url(#b)" x="0" y="0" width="100%" height="100%" href="{$uri}"></image>
             </svg>
             EOD;
 

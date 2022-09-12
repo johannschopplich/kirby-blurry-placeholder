@@ -6,15 +6,11 @@ class BlurryPlaceholder
 {
     /**
      * Creates a blurry image placeholder
-     *
-     * @param \Kirby\Cms\File $file
-     * @param float|null $ratio
-     * @return string
-     * @throws \Kirby\Exception\InvalidArgumentException
      */
-    public static function image(\Kirby\Cms\File $file, $ratio = null): string
+    public static function image(\Kirby\Cms\File $file, float|null $ratio = null): string
     {
-        $pixelTarget = option('kirby-extended.blurry-placeholder.pixel-target', 60);
+        $kirby = kirby();
+        $pixelTarget = $kirby->option('kirby-extended.blurry-placeholder.pixel-target', 60);
 
         // Aims for an image of ~P pixels (w * h = ~P)
         $height = sqrt($pixelTarget / ($ratio ?? $file->ratio()));
@@ -27,7 +23,7 @@ class BlurryPlaceholder
             'quality' => 40
         ];
 
-        if ($format = option('thumbs.format')) {
+        if ($format = $kirby->option('thumbs.format')) {
             $options['format'] = $format;
         }
 
@@ -54,13 +50,8 @@ class BlurryPlaceholder
 
     /**
      * Returns the blurry image placeholder as data URI scheme
-     *
-     * @param \Kirby\Cms\File $file
-     * @param float|null $ratio
-     * @return string
-     * @throws \Kirby\Exception\InvalidArgumentException
      */
-    public static function uri(\Kirby\Cms\File $file, $ratio = null): string
+    public static function uri(\Kirby\Cms\File $file, float|null $ratio = null): string
     {
         $svg = static::image($file, $ratio);
         $dataUri = 'data:image/svg+xml;charset=utf-8,' . static::svgToUri($svg);
@@ -70,9 +61,6 @@ class BlurryPlaceholder
 
     /**
      * Returns the URI-encoded string of an SVG
-     *
-     * @param string $data
-     * @return string
      */
     private static function svgToUri(string $data): string
     {

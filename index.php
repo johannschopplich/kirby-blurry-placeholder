@@ -6,8 +6,8 @@ load([
 
 \Kirby\Cms\App::plugin('kirby-extended/blurry-placeholder', [
     'fileMethods' => [
-        'placeholder' => fn (?float $ratio = null) => \KirbyExtended\BlurryPlaceholder::image($this, $ratio),
-        'placeholderUri' => fn (?float $ratio = null) => \KirbyExtended\BlurryPlaceholder::uri($this, $ratio)
+        'placeholder' => fn (float|null $ratio = null) => \KirbyExtended\BlurryPlaceholder::image($this, $ratio),
+        'placeholderUri' => fn (float|null $ratio = null) => \KirbyExtended\BlurryPlaceholder::uri($this, $ratio)
     ],
     'tags' => [
         'blurryimage' => require __DIR__ . '/tags/blurryimage.php'

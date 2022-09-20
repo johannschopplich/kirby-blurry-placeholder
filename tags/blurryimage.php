@@ -56,14 +56,13 @@ return [
 
         if ($tag->file !== null) {
             $dataUri = $tag->file->placeholderUri();
-            $preset = $tag->kirby()->option('kirby-extended.blurry-placeholder.kirbytag.srcset-preset');
-            $sizes = $tag->kirby()->option('kirby-extended.blurry-placeholder.kirbytag.sizes', 'auto');
-            $hasPreset = $preset !== null;
+            $preset = $tag->kirby()->option('johannschopplich.blurry-placeholder.kirbytag.srcset-preset') ?? $tag->kirby()->option('kirby-extended.blurry-placeholder.kirbytag.srcset-preset');
+            $sizes = $tag->kirby()->option('johannschopplich.blurry-placeholder.kirbytag.sizes') ?? $tag->kirby()->option('kirby-extended.blurry-placeholder.kirbytag.sizes', 'auto');
 
             $image = Html::img($dataUri, A::merge($imageAttr, [
-                'data-src' => !$hasPreset ? $tag->src : null,
-                'data-srcset' => $hasPreset ? $tag->file->srcset($preset) : null,
-                'data-sizes' => $hasPreset ? $sizes : null,
+                'data-src' => $preset === null ? $tag->src : null,
+                'data-srcset' => $preset ? $tag->file->srcset($preset) : null,
+                'data-sizes' => $preset ? $sizes : null,
                 'data-lazyload' => 'true',
             ]));
         } else {

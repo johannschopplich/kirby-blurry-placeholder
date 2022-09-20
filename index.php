@@ -1,13 +1,19 @@
 <?php
 
+use JohannSchopplich\BlurryPlaceholder;
+
 load([
-    'KirbyExtended\\BlurryPlaceholder' => 'classes/KirbyExtended/BlurryPlaceholder.php'
+    'JohannSchopplich\\BlurryPlaceholder' => 'BlurryPlaceholder.php'
 ], __DIR__);
 
-\Kirby\Cms\App::plugin('kirby-extended/blurry-placeholder', [
+\Kirby\Cms\App::plugin('johannschopplich/blurry-placeholder', [
     'fileMethods' => [
-        'placeholder' => fn (float|null $ratio = null) => \KirbyExtended\BlurryPlaceholder::image($this, $ratio),
-        'placeholderUri' => fn (float|null $ratio = null) => \KirbyExtended\BlurryPlaceholder::uri($this, $ratio)
+        'placeholder' => function (float|null $ratio = null) {
+            return BlurryPlaceholder::image($this, $ratio);
+        },
+        'placeholderUri' => function (float|null $ratio = null) {
+            return BlurryPlaceholder::uri($this, $ratio);
+        }
     ],
     'tags' => [
         'blurryimage' => require __DIR__ . '/tags/blurryimage.php'

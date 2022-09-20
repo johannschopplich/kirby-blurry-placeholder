@@ -1,6 +1,6 @@
 <?php
 
-namespace KirbyExtended;
+namespace JohannSchopplich;
 
 class BlurryPlaceholder
 {
@@ -10,7 +10,7 @@ class BlurryPlaceholder
     public static function image(\Kirby\Cms\File $file, float|null $ratio = null): string
     {
         $kirby = kirby();
-        $pixelTarget = $kirby->option('kirby-extended.blurry-placeholder.pixel-target', 60);
+        $pixelTarget = $kirby->option('johannschopplich.blurry-placeholder.pixel-target') ?? $kirby->option('kirby-extended.blurry-placeholder.pixel-target', 60);
 
         // Aims for an image of ~P pixels (w * h = ~P)
         $height = sqrt($pixelTarget / ($ratio ?? $file->ratio()));

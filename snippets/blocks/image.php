@@ -9,29 +9,29 @@ $link    = $block->link();
 $img     = null;
 
 if ($block->location() === 'web') {
-  $img = Html::img($block->src(), ['alt' => $alt]);
+    $img = Html::img($block->src(), ['alt' => $alt]);
 } elseif ($image = $block->image()->toFile()) {
-  if ($alt->isEmpty()) {
-    $alt = $image->alt();
-  }
+    if ($alt->isEmpty()) {
+        $alt = $image->alt();
+    }
 
-  if ($caption->isEmpty()) {
-    $caption = $image->caption();
-  }
+    if ($caption->isEmpty()) {
+        $caption = $image->caption();
+    }
 
-  $img = Html::img(
-    $image->placeholderUri(),
-    [
-      'data-lazyload' => 'true',
-      'data-srcset' => $image->srcset(),
-      'data-sizes' => 'auto',
-      'width' => $image->width(),
-      'height' => $image->height(),
-      'alt' => $alt
-    ]
-  );
+    $img = Html::img(
+        $image->placeholderUri(),
+        [
+          'data-lazyload' => 'true',
+          'data-srcset' => $image->srcset(),
+          'data-sizes' => 'auto',
+          'width' => $image->width(),
+          'height' => $image->height(),
+          'alt' => $alt
+        ]
+    );
 } else {
-  return;
+    return;
 }
 
 ?>

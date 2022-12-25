@@ -2,7 +2,7 @@
   "name": "johannschopplich/kirby-blurry-placeholder",
   "description": "Blurry image placeholders for better UX",
   "type": "kirby-plugin",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "keywords": [
     "kirby",
     "placeholder",
@@ -24,9 +24,11 @@
     "getkirby/composer-installer": "^1.2"
   },
   "require-dev": {
-    "getkirby/cms": "^3.7"
+    "friendsofphp/php-cs-fixer": "@stable",
+    "getkirby/cms": "^3.8"
   },
   "scripts": {
+    "fix": "php-cs-fixer fix",
     "dist": "composer install --no-dev --optimize-autoloader"
   },
   "config": {

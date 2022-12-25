@@ -22,12 +22,12 @@ if ($block->location() === 'web') {
     $img = Html::img(
         $image->placeholderUri(),
         [
-          'data-lazyload' => 'true',
-          'data-srcset' => $image->srcset(),
-          'data-sizes' => 'auto',
-          'width' => $image->width(),
-          'height' => $image->height(),
-          'alt' => $alt
+            'data-lazyload' => 'true',
+            'data-srcset' => $image->srcset(),
+            'data-sizes' => 'auto',
+            'width' => $image->width(),
+            'height' => $image->height(),
+            'alt' => $alt
         ]
     );
 } else {

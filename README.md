@@ -190,7 +190,7 @@ $file->placeholderUri([
 
 #### Transparent Images
 
-If you know that your image (e.g. a logo) is transparent, you can pass the `transparent` option to the `placeholderUri()` to [circumvent artefacts at the edges of the generated blur](https://github.com/johannschopplich/kirby-blurry-placeholder/issues/5):
+If you know that your image (e.g. a logo) is transparent, you can pass the `transparent` option to the `placeholderUri()` to [circumvent artifacts at the edges of the generated blur](https://github.com/johannschopplich/kirby-blurry-placeholder/issues/5):
 
 ```php
 <img src="<?= $image->placeholderUri(['transparent' => true]) ?>" />

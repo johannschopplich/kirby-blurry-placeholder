@@ -56,8 +56,8 @@ return [
 
         if ($tag->file !== null) {
             $dataUri = $tag->file->placeholderUri();
-            $preset = $tag->kirby()->option('johannschopplich.blurry-placeholder.kirbytag.srcset-preset') ?? $tag->kirby()->option('kirby-extended.blurry-placeholder.kirbytag.srcset-preset');
-            $sizes = $tag->kirby()->option('johannschopplich.blurry-placeholder.kirbytag.sizes') ?? $tag->kirby()->option('kirby-extended.blurry-placeholder.kirbytag.sizes', 'auto');
+            $preset = $tag->kirby()->option('johannschopplich.blurry-placeholder.kirbytag.srcset-preset');
+            $sizes = $tag->kirby()->option('johannschopplich.blurry-placeholder.kirbytag.sizes', 'auto');
 
             $image = Html::img($dataUri, A::merge($imageAttr, [
                 'data-src' => $preset === null ? $tag->src : null,

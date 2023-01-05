@@ -179,6 +179,15 @@ Both `$file->placeholder()` and `$file->placeholderUri()` file methods support t
 | `ratio`       | `float | null`   | `null`      | The ratio of the image. If not set the original image's ratio will be used.                                                                                                                                                                      |
 | `transparent` | `bool  | null`   | `null`      | Mark the image as transparent. If `true`, the generated blur will be cropped at the edges. If `false`, the generated blur will be extended at the edges. By default, the plugin will try to evaluate if the the image contains an alpha channel. |
 
+Example:
+
+```php
+$file->placeholderUri([
+  'ratio' => 1.5,
+  'transparent' => true
+]);
+```
+
 #### Transparent Images
 
 If you know that your image (e.g. a logo) is transparent, you can pass the `transparent` option to the `placeholderUri()` to [circumvent artefacts at the edges of the generated blur](https://github.com/johannschopplich/kirby-blurry-placeholder/issues/5):

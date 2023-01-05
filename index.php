@@ -8,12 +8,8 @@ load([
 
 \Kirby\Cms\App::plugin('johannschopplich/blurry-placeholder', [
     'fileMethods' => [
-        'placeholder' => function (float|null $ratio = null) {
-            return BlurryPlaceholder::image($this, $ratio);
-        },
-        'placeholderUri' => function (float|null $ratio = null) {
-            return BlurryPlaceholder::uri($this, $ratio);
-        }
+        'placeholder' => fn (array $options = []) => BlurryPlaceholder::image($this, $options),
+        'placeholderUri' => fn (array $options = []) => BlurryPlaceholder::uri($this, $options)
     ],
     'tags' => [
         'blurryimage' => require __DIR__ . '/tags/blurryimage.php'

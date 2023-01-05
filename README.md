@@ -15,15 +15,14 @@ How it works:
 - 🥨 Respects [custom image formats](https://getkirby.com/docs/guide/templates/resize-images-on-the-fly#image-formats), like WebP and AVIF
 - 🏗 Use as:
   - [Image block](#as-kirby-image-block)
-  - [Kirbytag](#as-kirbytag)
+  - [KirbyTag](#as-kirbytag)
   - [File method](#as-file-method)
 - [🦌 Loadeer.js](https://github.com/johannschopplich/loadeer) for lazy loading in the frontend
 - 🔍 SEO-friendly
 
 ## Requirements
 
-- Kirby 3.6+
-- PHP 8.0+
+- Kirby 3.8+
 
 ## Installation
 
@@ -47,7 +46,7 @@ composer require johannschopplich/kirby-blurry-placeholder
 
 ### As Kirby Image Block
 
-Each Kirby site is tailored to its own use-case, thus this plugin won't add a Kirby block by default. Instead, take a look into the provided [image block example](./snippets/blocks/image.php) to get an idea of how to implement blurry placeholders within blocks.
+Every Kirby site is tailored to its use-case. Thus, this plugin won't add a Kirby block by default. Instead, take a look into the provided [image block example](./snippets/blocks/image.php) to get an idea of how to implement blurry placeholders within blocks.
 
 Of course, you can just copy the block into your `site/snippets/blocks` folder of your current Kirby project, use it as is or adapt it to your needs!
 
@@ -56,7 +55,7 @@ Of course, you can just copy the block into your `site/snippets/blocks` folder o
 `$file->placeholderUri()` creates and returns the URI-encoded SVG placeholder.
 
 ```html
-<!-- Using the `placeholderUri` for an inlined image in the `src` attribute -->
+<!-- Using the `placeholderUri` file method for the `src` attribute -->
 <img
   src="<?= $image->placeholderUri() ?>"
   data-src="<?= $image->url() ?>"
@@ -65,25 +64,9 @@ Of course, you can just copy the block into your `site/snippets/blocks` folder o
 />
 ```
 
-#### Cropped Images
+### As KirbyTag
 
-> Kirby doesn't support file methods on cropped files/images, because the latter inherit the `Kirby\Cms\FileVersion` class.
-
-Pass the ratio of a cropped image to the placeholder method to generate a cropped preview:
-
-```php
-<?php $cropped = $original->crop(500, 400) ?>
-<img
-  src="<?= $original->placeholderUri(5/4) ?>"
-  data-src="<?= $cropped->url() ?>"
-  data-lazyload
-  alt="<?= $original->alt() ?>"
-/>
-```
-
-### As Kirbytag
-
-This plugin doesn't overwrite the core `(image: …)` Kirbytag, but builds upon it for a custom tag. Thus, all of the options present in Kirby's `(image: …)` tag are available in the plugin's tag as well.
+This plugin provides the `(blurryimage: …)` KirbyTag built upon Kirby's core `(image: …)` tag. All of the Kirby's image tag options are inferred and thus available for the `(blurryimage: …)` tag.
 
 The `(blurryimage: …)` tag:
 
@@ -99,13 +82,11 @@ Example use within a [KirbyText](https://getkirby.com/docs/reference/text/kirbyt
 (blurryimage: myimage.jpg class: is-poster)
 ```
 
-If you have enabled `srcset`'s in the options, the Kirbytag syntax stays the same. Just the output changes.
+If you have enabled `srcset`'s in the options, the KirbyTag syntax stays the same. Just the output changes.
 
 ## Lazy Loading in the Frontend
 
-To lazily load the images once they get apparent in the viewport, a JavaScript library is necessary.
-
-I strongly recommend [🦌 Loadeer.js](https://github.com/johannschopplich/loadeer). It has been written with this Kirby plugin in mind. In a nutshell, it's a tiny, performant, SEO-friendly lazy loading library and can be used with or without a build step if you don't have a frontend asset build chain.
+To lazily load the images once they get apparent in the viewport, a JavaScript library is necessary: [🦌 Loadeer.js](https://github.com/johannschopplich/loadeer) is written with this Kirby plugin in mind. In a nutshell, it's a tiny, performant, SEO-friendly lazy loading library and can be used with or without a build step if you don't have a frontend asset build chain.
 
 ### Without Build Step & Auto Initialization
 
@@ -131,13 +112,16 @@ instance.observe();
 
 ### Automatically Calculate the `sizes` Attribute
 
-Loadeer.js supports setting the `sizes` attribute automatically, corresponding to the current size of your image. For this to work, the `data-sizes` attribute has to be set to `auto`. If you have `srcset`'s enabled in your configuration, this is already done for you when using the `(blurryimage: …)` Kirbytag.
+[Loadeer.js](<(https://github.com/johannschopplich/loadeer)>) supports setting the `sizes` attribute automatically, corresponding to the current size of your image. For this to work, the `data-sizes` attribute has to be set to `auto`. If you have `srcset`'s enabled in your configuration, this is already done for you when using the `(blurryimage: …)` KirbyTag.
 
 ### Use a Lazy Loader of Your Choice
 
-Each parsed Kirbytag adds the `data-lazyload` attribute to the `img` element. Consequently, you can let a lazy loader of choice select these elements by passing `[data-lazyload]` as selector.
+Each parsed KirbyTag adds the `data-lazyload` attribute to the `img` element. Consequently, you can let a lazy loader of choice select these elements by passing `[data-lazyload]` as selector.
 
-### Animating with the "Blur Down" Technique
+### Animating the Blur
+
+<details>
+<summary>🎨 Animating with the "Blur Down" Technique</summary>
 
 > ⚠️ **Disclaimer**: Please avoid copying any code until reading this section in full. This is an experimental technique that comes with caveats (mostly performance issues).
 
@@ -156,7 +140,7 @@ We can then apply a transition to such properties.
 /* Respect users choice for reduced motion */
 @media (prefers-reduced-motion: no-preference) {
   img[data-lazyload] {
-    transition: 1.2s cubic-bezier(0.86, 0.07, 0.07, 0.96);
+    transition: 1000ms cubic-bezier(0.86, 0.07, 0.07, 0.96);
     transition-property: filter, transform;
     /* Hint browser at change for better performance */
     will-change: filter, transform;
@@ -178,15 +162,54 @@ The biggest caveat with this implementation is the transition of `filter` – us
 
 So should you implement a "blur down" transition? **Probably not.** If you do, strongly consider the caveats. The best animation is the one that engages users, not the one that scares them.
 
+</details>
+
 ## Options
 
-> ℹ️ The plugin's options namespace was changed to `johannschopplich.blurry-placeholder` in v2.0.1. All options from the former `kirby-extended.blurry-placeholder` are deprecated, but still supported as a fallback.
+### File Methods
+
+Both `$file->placeholder()` and `$file->placeholderUri()` file methods support the following options passed as an associative array:
+
+| Option        | Type    | Default | Description                                                                                                                                                                                                                                               |
+| ------------- | ------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ratio`       | `float` | `null`  | The ratio of the image. If `null` (default), the original image's ratio will be used.                                                                                                                                                                     |
+| `transparent` | `bool`  | `false` | Mark the image as transparent. If `true`, the generated blur will be cropped at the edges. If `false`, the generated blur will be extended at the edges. If `null`, the image's alpha channel will be evaluated to determine if the image is transparent. |
+
+## Transparent Images
+
+If the image doesn't contain an alpha channel itself, an additional filter is added to the blurry SVG to remove the alpha channel of the generated blur at the edges. This is useful for images without transparency, but leads to artefacts when working with transparent images, like logos.
+
+When not explictly specified, transparency is detected by evaluating the alpha channel of each pixel in the image (of the given pixel target).
+
+Example:
+
+```php
+<img src="<?= $image->placeholderUri(['transparent' => true]) ?>" />
+```
+
+#### Image With Ratio
+
+> Kirby doesn't support file methods on cropped images, because the latter inherits the `Kirby\Cms\FileVersion` class.
+
+Pass the ratio of a cropped image to the `placeholderUri()` method to generate a cropped preview:
+
+```php
+<?php $cropped = $original->crop(500, 400) ?>
+<img
+  src="<?= $original->placeholderUri(5/4) ?>"
+  data-src="<?= $cropped->url() ?>"
+  data-lazyload
+  alt="<?= $original->alt() ?>"
+/>
+```
+
+### Global
 
 | Option (`johannschopplich.blurry-placeholder.<option>`) | Default | Description                                                                                                                                                                                                                    |
 | ------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `pixel-target`                                          | `60`    | Aim for a placeholder image of ~P pixels (`w \* h = ~P`).                                                                                                                                                                      |
-| `kirbytag.srcset-preset`                                | `null`  | A preset passed to [Kirby's `srcset` method](https://getkirby.com/docs/reference/objects/cms/file/srcset#define-presets) when using the Kirbytag. If `null` (default), a `src` attribute will be rendered instead of `srcset`. |
-| `kirbytag.sizes`                                        | `auto`  | String for the `data-sizes` attribute if the Kirbytag works with `srcset`'s.                                                                                                                                                   |
+| `kirbytag.srcset-preset`                                | `null`  | A preset passed to [Kirby's `srcset` method](https://getkirby.com/docs/reference/objects/cms/file/srcset#define-presets) when using the KirbyTag. If `null` (default), a `src` attribute will be rendered instead of `srcset`. |
+| `kirbytag.sizes`                                        | `auto`  | Default for the `data-sizes` attribute if the KirbyTag works with `srcset`'s.                                                                                                                                                  |
 
 > All of the `srcset` options have to be wrapped in an array.
 
@@ -215,4 +238,4 @@ return [
 
 ## License
 
-[MIT](./LICENSE) License © 2020-2022 [Johann Schopplich](https://github.com/johannschopplich)
+[MIT](./LICENSE) License © 2020-2023 [Johann Schopplich](https://github.com/johannschopplich)

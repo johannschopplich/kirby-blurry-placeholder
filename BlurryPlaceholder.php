@@ -5,18 +5,19 @@ namespace JohannSchopplich;
 class BlurryPlaceholder
 {
     /**
-     * Creates a blurry image placeholder
+     * Returns the blurry image placeholder as SVG for the given file
      */
-    public static function image(\Kirby\Cms\File $file, float|null $ratio = null): string
+    public static function image(\Kirby\Cms\File $file, array $options = []): string
     {
         $kirby = kirby();
-        $pixelTarget = $kirby->option('johannschopplich.blurry-placeholder.pixel-target') ?? $kirby->option('kirby-extended.blurry-placeholder.pixel-target', 60);
+        $options['pixelTarget'] ??= $kirby->option('johannschopplich.blurry-placeholder.pixel-target', 60);
+        $options['ratio'] ??= $file->ratio();
 
         // Aims for an image of ~P pixels (w * h = ~P)
-        $height = sqrt($pixelTarget / ($ratio ?? $file->ratio()));
-        $width = $pixelTarget / $height;
+        $height = sqrt($options['pixelTarget'] / $options['ratio']);
+        $width = $options['pixelTarget'] / $height;
 
-        $options = [
+        $thumbOptions = [
             'width'   => round($width),
             'height'  => round($height),
             'crop'    => true,
@@ -24,24 +25,36 @@ class BlurryPlaceholder
         ];
 
         if ($format = $kirby->option('thumbs.format')) {
-            $options['format'] = $format;
+            $thumbOptions['format'] = $format;
         }
 
-        $uri = $file->thumb($options)->dataUri();
+        $thumb = $file->thumb($thumbOptions);
 
         $svgHeight = number_format($height, 2, '.', '');
         $svgWidth = number_format($width, 2, '.', '');
+        $svgUri = $thumb->dataUri();
+
+        $options['transparent'] ??= static::hasAlphaChannel($thumb);
+        $alphaFilter = '';
+
+        // If the image doesn't include an alpha channel itself, apply an additional filter
+        // to remove the alpha channel from the blur at the edges
+        if (!$options['transparent']) {
+            <<<EOD
+                <feComponentTransfer>
+                    <feFuncA type="discrete" tableValues="1 1"></feFuncA>
+                </feComponentTransfer>
+                EOD;
+        }
 
         // Wrap the blurred image in a SVG to avoid rasterizing the filter
         $svg = <<<EOD
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {$svgWidth} {$svgHeight}">
               <filter id="b" color-interpolation-filters="sRGB">
                 <feGaussianBlur stdDeviation=".5"></feGaussianBlur>
-                <feComponentTransfer>
-                  <feFuncA type="discrete" tableValues="1 1"></feFuncA>
-                </feComponentTransfer>
+                {$alphaFilter}
               </filter>
-              <image filter="url(#b)" x="0" y="0" width="100%" height="100%" href="{$uri}"></image>
+              <image filter="url(#b)" x="0" y="0" width="100%" height="100%" href="{$svgUri}"></image>
             </svg>
             EOD;
 
@@ -51,18 +64,37 @@ class BlurryPlaceholder
     /**
      * Returns the blurry image placeholder as data URI scheme
      */
-    public static function uri(\Kirby\Cms\File $file, float|null $ratio = null): string
+    public static function uri(\Kirby\Cms\File $file, array $options = []): string
     {
-        $svg = static::image($file, $ratio);
-        $dataUri = 'data:image/svg+xml;charset=utf-8,' . static::svgToUri($svg);
-
-        return $dataUri;
+        $svg = static::image($file, $options);
+        return 'data:image/svg+xml;charset=utf-8,' . static::encodeSvg($svg);
     }
 
     /**
-     * Returns the URI-encoded string of an SVG
+     * Checks whether a generated thumbnail contains an alpha channel
      */
-    private static function svgToUri(string $data): string
+    private static function hasAlphaChannel(\Kirby\Cms\FileVersion $file): bool
+    {
+        // Create a GD image from the thumbnail
+        $image = imagecreatefromstring($file->read());
+        $width = imagesx($image);
+        $height = imagesy($image);
+
+        for ($i = 0; $i < $width; $i++) {
+            for ($j = 0; $j < $height; $j++) {
+                if (imagecolorat($image, $i, $j) & 0x7F000000) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns the URL-encoded string of the given SVG
+     */
+    private static function encodeSvg(string $data): string
     {
         // Optimizes the data URI length by deleting line breaks and
         // removing unnecessary spaces
@@ -72,7 +104,7 @@ class BlurryPlaceholder
         $data = rawurlencode($data);
 
         // Back-decode certain characters to improve compression
-        // except '%20' to be compliant with W3C guidelines
+        // except `%20` to be compliant with W3C guidelines
         $data = str_replace(
             ['%2F', '%3A', '%3D'],
             ['/', ':', '='],

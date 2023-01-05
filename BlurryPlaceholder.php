@@ -63,9 +63,9 @@ class BlurryPlaceholder
     /**
      * Returns the blurry image placeholder as data URI scheme
      */
-    public static function uri(\Kirby\Cms\File $file, float|null $ratio = null): string
+    public static function uri(\Kirby\Cms\File $file, float|null $ratio = null, bool|null $transparent = null): string
     {
-        $svg = static::image($file, $ratio);
+        $svg = static::image($file, $ratio, $transparent);
         $dataUri = 'data:image/svg+xml;charset=utf-8,' . static::svgToUri($svg);
 
         return $dataUri;

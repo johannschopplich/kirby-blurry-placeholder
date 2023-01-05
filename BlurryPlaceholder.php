@@ -40,7 +40,7 @@ class BlurryPlaceholder
         // If the image doesn't include an alpha channel itself, apply an additional filter
         // to remove the alpha channel from the blur at the edges
         if (!$options['transparent']) {
-            <<<EOD
+            $alphaFilter = <<<EOD
                 <feComponentTransfer>
                     <feFuncA type="discrete" tableValues="1 1"></feFuncA>
                 </feComponentTransfer>

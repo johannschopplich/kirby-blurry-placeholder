@@ -46,7 +46,7 @@ composer require johannschopplich/kirby-blurry-placeholder
 
 ### As Kirby Image Block
 
-Every Kirby site is tailored to its use-case. Thus, this plugin won't add a Kirby block by default. Instead, take a look into the provided [image block example](./snippets/blocks/image.php) to get an idea of how to implement blurry placeholders within blocks.
+Each Kirby website is tailored to its own unique use case. Thus, this plugin won't add a Kirby block by default. Instead, take a look into the provided [image block example](./snippets/blocks/image.php) to get an idea of how to implement blurry placeholders within blocks.
 
 Of course, you can just copy the block into your `site/snippets/blocks` folder of your current Kirby project, use it as is or adapt it to your needs!
 
@@ -54,7 +54,7 @@ Of course, you can just copy the block into your `site/snippets/blocks` folder o
 
 `$file->placeholderUri()` creates and returns the URI-encoded SVG placeholder.
 
-```html
+```php
 <!-- Using the `placeholderUri` file method for the `src` attribute -->
 <img
   src="<?= $image->placeholderUri() ?>"
@@ -66,7 +66,7 @@ Of course, you can just copy the block into your `site/snippets/blocks` folder o
 
 ### As KirbyTag
 
-This plugin provides the `(blurryimage: …)` KirbyTag built upon Kirby's core `(image: …)` tag. All of the Kirby's image tag options are inferred and thus available for the `(blurryimage: …)` tag.
+This plugin provides a `(blurryimage: …)` KirbyTag built upon Kirby's core `(image: …)` tag. All of the Kirby's image tag options are inferred and thus available for the custom tag as well.
 
 The `(blurryimage: …)` tag:
 
@@ -86,14 +86,18 @@ If you have enabled `srcset`'s in the options, the KirbyTag syntax stays the sam
 
 ## Lazy Loading in the Frontend
 
-To lazily load the images once they get apparent in the viewport, a JavaScript library is necessary: [🦌 Loadeer.js](https://github.com/johannschopplich/loadeer) is written with this Kirby plugin in mind. In a nutshell, it's a tiny, performant, SEO-friendly lazy loading library and can be used with or without a build step if you don't have a frontend asset build chain.
+To lazily load the images once they get apparent in the viewport, a JavaScript library is necessary. [🦌 Loadeer.js](https://github.com/johannschopplich/loadeer) is written with this Kirby plugin in mind. In a nutshell, it's a tiny, performant, SEO-friendly lazy loading library and can be used with or without a build step if you don't have a frontend asset build chain.
 
 ### Without Build Step & Auto Initialization
 
 Simply load it from a CDN:
 
 ```html
-<script src="https://unpkg.com/loadeer" defer init></script>
+<script
+  src="https://unpkg.com/loadeer@2.1.1/dist/loadeer.umd.js"
+  defer
+  init
+></script>
 ```
 
 - The `defer` attribute makes the script execute after HTML content is parsed.
@@ -112,7 +116,7 @@ instance.observe();
 
 ### Automatically Calculate the `sizes` Attribute
 
-[Loadeer.js](<(https://github.com/johannschopplich/loadeer)>) supports setting the `sizes` attribute automatically, corresponding to the current size of your image. For this to work, the `data-sizes` attribute has to be set to `auto`. If you have `srcset`'s enabled in your configuration, this is already done for you when using the `(blurryimage: …)` KirbyTag.
+[Loadeer.js](https://github.com/johannschopplich/loadeer) supports setting the `sizes` attribute automatically, corresponding to the current size of your image. For this to work, the `data-sizes` attribute has to be set to `auto`. If you have `srcset`'s enabled in your configuration, this is already done for you when using the `(blurryimage: …)` KirbyTag.
 
 ### Use a Lazy Loader of Your Choice
 
@@ -123,9 +127,9 @@ Each parsed KirbyTag adds the `data-lazyload` attribute to the `img` element. Co
 <details>
 <summary>🎨 Animating with the "Blur Down" Technique</summary>
 
-> ⚠️ **Disclaimer**: Please avoid copying any code until reading this section in full. This is an experimental technique that comes with caveats (mostly performance issues).
+> ⚠️ **Disclaimer**: Please avoid copying any code until reading this section. This is an experimental technique that comes with caveats (mostly performance issues).
 
-When using Loadeer.js, we can target all lazyloaded images with `[data-lazyload]` and refine this selection with `[data-src]` only to target the images that haven't been fully loaded yet.
+When using Loadeer.js, we can target all lazy-loaded images with `[data-lazyload]` and refine this selection with `[data-src]` only to target the images that haven't been fully loaded yet.
 
 ```css
 img[data-lazyload][data-src] {
@@ -148,7 +152,7 @@ We can then apply a transition to such properties.
 }
 ```
 
-As we are manually blurring the `img` **element** which `src` attribute is our generated SVG (so essentially the SVG is a child of our `img` element), we _need_ to have a container that hides overflowing parts. For better performance we also enforce GPU rendering by applying a `transform` declaration.
+As we are manually blurring the `img` **element**, which `src` attribute is our generated SVG (so essentially the SVG is a child of our `img` element), we _need_ to have a container that hides overflowing parts. For better performance we also enforce GPU rendering by applying a `transform` declaration.
 
 ```css
 .img-container {
@@ -158,7 +162,7 @@ As we are manually blurring the `img` **element** which `src` attribute is our g
 }
 ```
 
-The biggest caveat with this implementation is the transition of `filter` – users on lower-end devices will probably experience frame drops. Even using `transform` to enforce GPU rendering and using `will-change` as last resort of hinting the at the transition does not always fix such issues. In the end, it heavily depends on what devices your end users are on, how big the painted image is on the site and how many images your site features (that might all blur up at the same time).
+The biggest caveat with this implementation is the transition of `filter` - users on lower-end devices will probably experience frame drops. Even using `transform` to enforce GPU rendering and using `will-change` as last resort of hinting the at the transition does not always fix such issues. In the end, it heavily depends on what devices your end users are on, how big the painted image is on the site and how many images your site features (that might all blur up at the same time).
 
 So should you implement a "blur down" transition? **Probably not.** If you do, strongly consider the caveats. The best animation is the one that engages users, not the one that scares them.
 
@@ -170,38 +174,36 @@ So should you implement a "blur down" transition? **Probably not.** If you do, s
 
 Both `$file->placeholder()` and `$file->placeholderUri()` file methods support the following options passed as an associative array:
 
-| Option        | Type    | Default | Description                                                                                                                                                                                                                                               |
-| ------------- | ------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ratio`       | `float` | `null`  | The ratio of the image. If `null` (default), the original image's ratio will be used.                                                                                                                                                                     |
-| `transparent` | `bool`  | `false` | Mark the image as transparent. If `true`, the generated blur will be cropped at the edges. If `false`, the generated blur will be extended at the edges. If `null`, the image's alpha channel will be evaluated to determine if the image is transparent. |
+| Option        | Type    | Default | Description                                                                                                                                                                                                                                      |
+| ------------- | ------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ratio`       | `float` | `null`  | The ratio of the image. If not set the original image's ratio will be used.                                                                                                                                                                      |
+| `transparent` | `bool`  | `null`  | Mark the image as transparent. If `true`, the generated blur will be cropped at the edges. If `false`, the generated blur will be extended at the edges. By default, the plugin will try to evaluate if the the image contains an alpha channel. |
 
-## Transparent Images
+#### Transparent Images
 
-If the image doesn't contain an alpha channel itself, an additional filter is added to the blurry SVG to remove the alpha channel of the generated blur at the edges. This is useful for images without transparency, but leads to artefacts when working with transparent images, like logos.
-
-When not explictly specified, transparency is detected by evaluating the alpha channel of each pixel in the image (of the given pixel target).
-
-Example:
+If you know that your image (e.g. a logo) is transparent, you can pass the `transparent` option to the `placeholderUri()` to [circumvent artefacts at the edges of the generated blur](https://github.com/johannschopplich/kirby-blurry-placeholder/issues/5):
 
 ```php
 <img src="<?= $image->placeholderUri(['transparent' => true]) ?>" />
 ```
 
+When not explictly specified, transparency is detected by evaluating the alpha channel of each pixel in the thumbnail image (by the given pixel target). If the image doesn't contain an alpha channel itself, an additional filter is added to the SVG placeholder to remove the alpha channel of the generated blur at the edges.
+
 #### Image With Ratio
 
-> Kirby doesn't support file methods on cropped images, because the latter inherits the `Kirby\Cms\FileVersion` class.
-
-Pass the ratio of a cropped image to the `placeholderUri()` method to generate a cropped preview:
+Pass the `ratio` option to the `placeholderUri()` method on the original image to generate a placeholder image with a specific ratio:
 
 ```php
 <?php $cropped = $original->crop(500, 400) ?>
 <img
-  src="<?= $original->placeholderUri(5/4) ?>"
+  src="<?= $original->placeholderUri(['ratio' => 5/4]) ?>"
   data-src="<?= $cropped->url() ?>"
   data-lazyload
   alt="<?= $original->alt() ?>"
 />
 ```
+
+> ℹ️ Kirby doesn't support file methods on cropped images, because the latter inherits the `Kirby\Cms\FileVersion` class.
 
 ### Global
 
@@ -235,6 +237,7 @@ return [
 ## Credits
 
 - AMP's [blurry image implementation](https://github.com/ampproject/amp-toolbox/blob/0c8755016ae825b11b63b98be83271fd14cc0486/packages/optimizer/lib/transformers/AddBlurryImagePlaceholders.js)
+- [Tobias Möritz](https://github.com/tobimori) for his [transparency detection](https://github.com/johannschopplich/kirby-blurry-placeholder/pull/22)
 
 ## License
 

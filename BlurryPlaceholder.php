@@ -2,8 +2,6 @@
 
 namespace JohannSchopplich;
 
-use Kirby\Cms\FileVersion;
-
 class BlurryPlaceholder
 {
     /**
@@ -97,7 +95,7 @@ class BlurryPlaceholder
     /**
      * Function to check whether a generated thumbnail contains transparency
      */
-    private static function isTransparent(FileVersion $image): bool
+    private static function isTransparent(\Kirby\Cms\FileVersion $image): bool
     {
         // Create a GD image from the file.
         $image = imagecreatefromstring($image->read());

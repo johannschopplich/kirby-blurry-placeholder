@@ -174,7 +174,7 @@ So should you implement a "blur down" transition? **Probably not.** If you do, s
 
 Both `$file->placeholder()` and `$file->placeholderUri()` file methods support the following options passed as an associative array:
 
-| Option        | Type   | Default | Description |
+| Option        | Type   | Default | Description |                                                                                                                                                                                                                                                  |
 | ------------- | ------ | ------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `ratio`       | `float | null`   | `null`      | The ratio of the image. If not set the original image's ratio will be used.                                                                                                                                                                      |
 | `transparent` | `bool  | null`   | `null`      | Mark the image as transparent. If `true`, the generated blur will be cropped at the edges. If `false`, the generated blur will be extended at the edges. By default, the plugin will try to evaluate if the the image contains an alpha channel. |

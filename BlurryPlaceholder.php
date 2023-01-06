@@ -7,7 +7,7 @@ class BlurryPlaceholder
     /**
      * Returns the blurry image placeholder as SVG for the given file
      */
-    public static function image(\Kirby\Cms\File $file, array $options = []): string
+    public static function image(\Kirby\Filesystem\Asset|\Kirby\Cms\File $file, array $options = []): string
     {
         $kirby = kirby();
         $options['pixelTarget'] ??= $kirby->option('johannschopplich.blurry-placeholder.pixel-target', 60);

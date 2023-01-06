@@ -216,15 +216,15 @@ Pass the `ratio` option to the `placeholderUri()` method on the original image t
 
 ### Global
 
-| Option (`johannschopplich.blurry-placeholder.<option>`) | Default | Description                                                                                                                                                                                                                    |
-| ------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `pixel-target`                                          | `60`    | Aim for a placeholder image of ~P pixels (`w \* h = ~P`).                                                                                                                                                                      |
-| `kirbytag.srcset-preset`                                | `null`  | A preset passed to [Kirby's `srcset` method](https://getkirby.com/docs/reference/objects/cms/file/srcset#define-presets) when using the KirbyTag. If `null` (default), a `src` attribute will be rendered instead of `srcset`. |
-| `kirbytag.sizes`                                        | `auto`  | Default for the `data-sizes` attribute if the KirbyTag works with `srcset`'s.                                                                                                                                                  |
+| Option                                                       | Default | Description                                                                                                                                                                                                                    |
+| ------------------------------------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pixel-target`           | `60`    | Aim for a placeholder image of ~P pixels (`w \* h = ~P`).                                                                                                                                                                      |
+| `kirbytag.srcset-preset` | `null`  | A preset passed to [Kirby's `srcset` method](https://getkirby.com/docs/reference/objects/cms/file/srcset#define-presets) when using the KirbyTag. If `null` (default), a `src` attribute will be rendered instead of `srcset`. |
+| `kirbytag.sizes`         | `auto`  | Default for the `data-sizes` attribute if the KirbyTag works with `srcset`'s.                                                                                                                                                  |
 
 > All of the `srcset` options have to be wrapped in an array.
 
-To give an example for your `config.php`:
+Options can be set in your `config.php` file:
 
 ```php
 return [

@@ -8,7 +8,9 @@ load([
 
 \Kirby\Cms\App::plugin('johannschopplich/blurry-placeholder', [
     'fileMethods' => [
+        /** @kql-allowed */
         'placeholder' => fn (array $options = []) => BlurryPlaceholder::image($this, $options),
+        /** @kql-allowed */
         'placeholderUri' => fn (array $options = []) => BlurryPlaceholder::uri($this, $options)
     ],
     'tags' => [

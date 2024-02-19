@@ -30,6 +30,8 @@ lazyLoad()
 
 </details>
 
+---
+
 ![Preview of Kirby blurry placeholder plugin](./.github/kirby-blurry-placeholder-plugin.png)
 
 # Kirby Blurry Placeholder

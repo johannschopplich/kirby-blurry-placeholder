@@ -6,6 +6,8 @@
 <details>
 <summary>Example of ThumHash and unlazy</summary>
 
+Inline a thumbnail of your image:
+
 ```php
 <img
   src="<?= $image->thumbhashUri() ?>"
@@ -16,6 +18,8 @@
   height="<?= $image->height() ?>"
 >
 ```
+
+Lazy load all images with the `loading="lazy"` attribute:
 
 ```ts
 import { lazyLoad } from 'unlazy'

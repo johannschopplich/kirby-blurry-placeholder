@@ -6,8 +6,8 @@ This plugin implements progressive image loading, providing a better user experi
 
 How it works:
 
-1. An inline, URI-encoded SVG fills the `src` attribute of a given image element. The blurred image is wrapped in a SVG to avoid rasterizing the filter.
-2. The large images are then only requests when they are within the viewport.
+1. An inline, URI-encoded SVG fills the `src` attribute of a given image element. The blurred image is wrapped in an SVG to avoid rasterizing the filter.
+2. The large images are then only requested when they are within the viewport.
 
 ## Key Features
 
@@ -46,9 +46,9 @@ composer require johannschopplich/kirby-blurry-placeholder
 
 ### As Kirby Image Block
 
-Each Kirby website is tailored to its own unique use case. Thus, this plugin won't add a Kirby block by default. Instead, take a look into the provided [image block example](./snippets/blocks/image.php) to get an idea of how to implement blurry placeholders within blocks.
+Each Kirby website is tailored to its own unique use case. Thus, this plugin won't add a Kirby block by default. Instead, take a look at the provided [image block example](./snippets/blocks/image.php) to get an idea of how to implement blurry placeholders within blocks.
 
-Of course, you can just copy the block into your `site/snippets/blocks` folder of your current Kirby project, use it as is or adapt it to your needs!
+Of course, you can just copy the block into your `site/snippets/blocks` folder of your current Kirby project, use it as is, or adapt it to your needs!
 
 ### As File Method
 
@@ -66,7 +66,7 @@ Of course, you can just copy the block into your `site/snippets/blocks` folder o
 
 ### As KirbyTag
 
-This plugin provides a `(blurryimage: …)` KirbyTag built upon Kirby's core `(image: …)` tag. All of the Kirby's image tag options are inferred and thus available for the custom tag as well.
+This plugin provides a `(blurryimage: …)` KirbyTag built upon Kirby's core `(image: …)` tag. All of Kirby's image tag options are inferred and thus available for the custom tag as well.
 
 The `(blurryimage: …)` tag:
 
@@ -86,7 +86,7 @@ If you have enabled `srcset`'s in the options, the KirbyTag syntax stays the sam
 
 ## Lazy Loading in the Frontend
 
-To lazily load the images once they get apparent in the viewport, a JavaScript library is necessary. [🦌 Loadeer.js](https://github.com/johannschopplich/loadeer) is written with this Kirby plugin in mind. In a nutshell, it's a tiny, performant, SEO-friendly lazy loading library and can be used with or without a build step if you don't have a frontend asset build chain.
+To lazily load the images once they become visible in the viewport, a JavaScript library is necessary. [🦌 Loadeer.js](https://github.com/johannschopplich/loadeer) is written with this Kirby plugin in mind. In a nutshell, it's a tiny, performant, SEO-friendly lazy loading library and can be used with or without a build step if you don't have a frontend asset build chain.
 
 ### Without Build Step & Auto Initialization
 
@@ -120,7 +120,7 @@ instance.observe();
 
 ### Use a Lazy Loader of Your Choice
 
-Each parsed KirbyTag adds the `data-lazyload` attribute to the `img` element. Consequently, you can let a lazy loader of choice select these elements by passing `[data-lazyload]` as selector.
+Each parsed KirbyTag adds the `data-lazyload` attribute to the `img` element. Consequently, you can let a lazy loader of choice select these elements by passing `[data-lazyload]` as a selector.
 
 ### Animating the Blur
 
@@ -152,7 +152,7 @@ We can then apply a transition to such properties.
 }
 ```
 
-As we are manually blurring the `img` **element**, which `src` attribute is our generated SVG (so essentially the SVG is a child of our `img` element), we _need_ to have a container that hides overflowing parts. For better performance we also enforce GPU rendering by applying a `transform` declaration.
+As we are manually blurring the `img` **element**, whose `src` attribute is our generated SVG (so essentially the SVG is a child of our `img` element), we _need_ to have a container that hides overflowing parts. For better performance, we also enforce GPU rendering by applying a `transform` declaration.
 
 ```css
 .img-container {
@@ -162,7 +162,7 @@ As we are manually blurring the `img` **element**, which `src` attribute is our 
 }
 ```
 
-The biggest caveat with this implementation is the transition of `filter` - users on lower-end devices will probably experience frame drops. Even using `transform` to enforce GPU rendering and using `will-change` as last resort of hinting the at the transition does not always fix such issues. In the end, it heavily depends on what devices your end users are on, how big the painted image is on the site and how many images your site features (that might all blur up at the same time).
+The biggest caveat with this implementation is the transition of `filter` - users on lower-end devices will probably experience frame drops. Even using `transform` to enforce GPU rendering and using `will-change` as a last resort to hint at the transition does not always fix such issues. In the end, it heavily depends on what devices your end users are on, how big the painted image is on the site, and how many images your site features (that might all blur up at the same time).
 
 So should you implement a "blur down" transition? **Probably not.** If you do, strongly consider the caveats. The best animation is the one that engages users, not the one that scares them.
 
@@ -177,7 +177,7 @@ Both `$file->placeholder()` and `$file->placeholderUri()` file methods support t
 | Option        | Type   | Default | Description |                                                                                                                                                                                                                                                  |
 | ------------- | ------ | ------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `ratio`       | `float | null`   | `null`      | The ratio of the image. If not set the original image's ratio will be used.                                                                                                                                                                      |
-| `transparent` | `bool  | null`   | `null`      | Mark the image as transparent. If `true`, the generated blur will be cropped at the edges. If `false`, the generated blur will be extended at the edges. By default, the plugin will try to evaluate if the the image contains an alpha channel. |
+| `transparent` | `bool  | null`   | `null`      | Mark the image as transparent. If `true`, the generated blur will be cropped at the edges. If `false`, the generated blur will be extended at the edges. By default, the plugin will try to evaluate if the image contains an alpha channel. |
 
 Example:
 
@@ -196,7 +196,7 @@ If you know that your image (e.g. a logo) is transparent, you can pass the `tran
 <img src="<?= $image->placeholderUri(['transparent' => true]) ?>" />
 ```
 
-When not explictly specified, transparency is detected by evaluating the alpha channel of each pixel in the thumbnail image (by the given pixel target). If the image doesn't contain an alpha channel itself, an additional filter is added to the SVG placeholder to remove the alpha channel of the generated blur at the edges.
+When not explicitly specified, transparency is detected by evaluating the alpha channel of each pixel in the thumbnail image (by the given pixel target). If the image doesn't contain an alpha channel itself, an additional filter is added to the SVG placeholder to remove the alpha channel of the generated blur at the edges.
 
 #### Image With Ratio
 
@@ -239,7 +239,7 @@ return [
 
 ## Placeholders in action
 
-> Note: GIF is slowed down so to grasp visually how placeholders look before the image kicks in.
+> Note: GIF is slowed down so as to grasp visually how placeholders look before the image kicks in.
 
 ![GIF showing plugin in action](./.github/kirby-blurry-placeholder-preview.gif)
 

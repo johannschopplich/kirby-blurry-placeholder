@@ -1,5 +1,6 @@
 > [!NOTE]
 > This plugin is not actively maintained anymore. I recommend to use [Kirby ThumbHash](https://github.com/tobimori/kirby-thumbhash) in combination with [unlazy](https://unlazy.byjohann.dev) (an evolved Loadeer.js) for a similar effect. It's the successor of this plugin and provides a more modern and flexible approach to lazy loading images.
+>
 > Thank you for your support and feedback over the years, especially since it was my first plugin for Kirby!
 
 <details>

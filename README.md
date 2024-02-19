@@ -1,3 +1,30 @@
+> [!NOTE]
+> This plugin is not actively maintained anymore. I recommend to use [Kirby ThumbHash](https://github.com/tobimori/kirby-thumbhash) in combination with [unlazy](https://unlazy.byjohann.dev) (an evolved Loadeer.js) for a similar effect. It's the successor of this plugin and provides a more modern and flexible approach to lazy loading images.
+> Thank you for your support and feedback over the years, especially since it was my first plugin for Kirby!
+
+<details>
+<summary>Example of ThumHash and unlazy</summary>
+
+```php
+<img
+  src="<?= $image->thumbhashUri() ?>"
+  loading="lazy"
+  data-srcset="<?= $image->srcset() ?>"
+  data-sizes="auto"
+  width="<?= $image->width() ?>"
+  height="<?= $image->height() ?>"
+>
+```
+
+```ts
+import { lazyLoad } from 'unlazy'
+
+// Apply lazy loading for all images by the selector `img[loading="lazy"]`
+lazyLoad()
+```
+
+</details>
+
 ![Preview of Kirby blurry placeholder plugin](./.github/kirby-blurry-placeholder-plugin.png)
 
 # Kirby Blurry Placeholder
@@ -22,7 +49,8 @@ How it works:
 
 ## Requirements
 
-- Kirby 3.8+
+- Kirby 3 or
+- Kirby 4
 
 ## Installation
 
